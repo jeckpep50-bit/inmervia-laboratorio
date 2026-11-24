@@ -1,0 +1,1870 @@
+[
+  {
+    "animal": "horse",
+    "parts": [
+      {
+        "name": "part_head",
+        "region": "head",
+        "triangles": 1148,
+        "vertices": 717,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_neck",
+        "region": "neck",
+        "triangles": 232,
+        "vertices": 161,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_fore_left",
+        "region": "fore_left",
+        "triangles": 327,
+        "vertices": 200,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_fore_right",
+        "region": "fore_right",
+        "triangles": 322,
+        "vertices": 198,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_shoulder",
+        "region": "shoulder",
+        "triangles": 71,
+        "vertices": 46,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_thorax",
+        "region": "thorax",
+        "triangles": 242,
+        "vertices": 153,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_pelvis",
+        "region": "pelvis",
+        "triangles": 113,
+        "vertices": 101,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_hind_left",
+        "region": "hind_left",
+        "triangles": 341,
+        "vertices": 209,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_tail",
+        "region": "tail",
+        "triangles": 134,
+        "vertices": 94,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_hind_right",
+        "region": "hind_right",
+        "triangles": 342,
+        "vertices": 211,
+        "materials": 1,
+        "uv_sets": 1
+      }
+    ],
+    "triangles": 3272,
+    "bounds_blender": {
+      "min": [
+        -1.6965004205703735,
+        -0.3189318776130676,
+        -9.986326432454007e-09
+      ],
+      "max": [
+        1.6965004205703735,
+        0.3189319968223572,
+        2.042611598968506
+      ]
+    },
+    "bones": [
+      {
+        "name": "horse Pelvis",
+        "head": [
+          -0.4303777515888214,
+          0.2536853849887848,
+          1.4012812376022339
+        ],
+        "tail": [
+          -0.43037649989128113,
+          -0.027326911687850952,
+          1.4012812376022339
+        ]
+      },
+      {
+        "name": "horse Spine",
+        "head": [
+          -0.43037736415863037,
+          0.04037533327937126,
+          1.5842204093933105
+        ],
+        "tail": [
+          -0.4303782880306244,
+          0.06870950758457184,
+          1.284400463104248
+        ]
+      },
+      {
+        "name": "horse Spine1",
+        "head": [
+          -0.43037617206573486,
+          -0.29781293869018555,
+          1.5525267124176025
+        ],
+        "tail": [
+          -0.43037712574005127,
+          -0.2775484323501587,
+          1.2203075885772705
+        ]
+      },
+      {
+        "name": "horse Spine2",
+        "head": [
+          -0.43037500977516174,
+          -0.6300449967384338,
+          1.5324790477752686
+        ],
+        "tail": [
+          -0.4303758442401886,
+          -0.7013520002365112,
+          1.157442569732666
+        ]
+      },
+      {
+        "name": "horse Neck",
+        "head": [
+          -0.4303741753101349,
+          -0.7955164313316345,
+          1.188449740409851
+        ],
+        "tail": [
+          -0.4303743541240692,
+          -1.0081250667572021,
+          1.0261272192001343
+        ]
+      },
+      {
+        "name": "horse Neck1",
+        "head": [
+          -0.4303737282752991,
+          -0.9575594067573547,
+          1.4012713432312012
+        ],
+        "tail": [
+          -0.43037423491477966,
+          -1.3048298358917236,
+          1.1289620399475098
+        ]
+      },
+      {
+        "name": "horse Neck2",
+        "head": [
+          -0.43037307262420654,
+          -1.229653000831604,
+          1.7487108707427979
+        ],
+        "tail": [
+          -0.4303736090660095,
+          -1.4583237171173096,
+          1.482141375541687
+        ]
+      },
+      {
+        "name": "horse Head",
+        "head": [
+          -0.430372416973114,
+          -1.4962222576141357,
+          1.9773815870285034
+        ],
+        "tail": [
+          -0.4303729832172394,
+          -1.4242721796035767,
+          1.862000823020935
+        ]
+      },
+      {
+        "name": "horse Ear R",
+        "head": [
+          -0.5144183039665222,
+          -1.5656973123550415,
+          2.07253360748291
+        ],
+        "tail": [
+          -0.5009317994117737,
+          -1.6838605403900146,
+          2.0066161155700684
+        ]
+      },
+      {
+        "name": "horse Ear L",
+        "head": [
+          -0.3478167653083801,
+          -1.572776198387146,
+          2.0712532997131348
+        ],
+        "tail": [
+          -0.36130309104919434,
+          -1.6909396648406982,
+          2.005336284637451
+        ]
+      },
+      {
+        "name": "horse Xtra Mouth",
+        "head": [
+          -0.43037357926368713,
+          -1.4854565858840942,
+          1.8023557662963867
+        ],
+        "tail": [
+          -0.43037354946136475,
+          -1.3962653875350952,
+          1.6997181177139282
+        ]
+      },
+      {
+        "name": "horse Xtra Eye L",
+        "head": [
+          -0.4303743839263916,
+          -1.628458023071289,
+          1.9457076787948608
+        ],
+        "tail": [
+          -0.3747000992298126,
+          -1.5044019222259521,
+          1.9456455707550049
+        ]
+      },
+      {
+        "name": "horse Xtra Eye R",
+        "head": [
+          -0.43037500977516174,
+          -1.6284581422805786,
+          1.945708155632019
+        ],
+        "tail": [
+          -0.37451452016830444,
+          -1.7524304389953613,
+          1.9458435773849487
+        ]
+      },
+      {
+        "name": "horse L Clavicle",
+        "head": [
+          -0.37371987104415894,
+          -0.9069010019302368,
+          1.5851187705993652
+        ],
+        "tail": [
+          -0.02106754668056965,
+          -0.8899264931678772,
+          1.674004077911377
+        ]
+      },
+      {
+        "name": "horse L UpperArm",
+        "head": [
+          -0.28886890411376953,
+          -1.0932122468948364,
+          1.2840527296066284
+        ],
+        "tail": [
+          -0.289493590593338,
+          -0.7509050369262695,
+          1.472461223602295
+        ]
+      },
+      {
+        "name": "horse L Forearm",
+        "head": [
+          -0.28514280915260315,
+          -0.904806911945343,
+          0.9417634010314941
+        ],
+        "tail": [
+          -0.2840120196342468,
+          -0.5888082981109619,
+          0.9285847544670105
+        ]
+      },
+      {
+        "name": "horse L Hand",
+        "head": [
+          -0.2823013961315155,
+          -0.9179952144622803,
+          0.6257758736610413
+        ],
+        "tail": [
+          -0.5758737921714783,
+          -0.9171643257141113,
+          0.624898374080658
+        ]
+      },
+      {
+        "name": "horse L Finger0",
+        "head": [
+          -0.2815008759498596,
+          -0.9439635872840881,
+          0.33335280418395996
+        ],
+        "tail": [
+          -0.2774725556373596,
+          -0.8400833606719971,
+          0.2893146276473999
+        ]
+      },
+      {
+        "name": "horse L Finger01",
+        "head": [
+          -0.28107592463493347,
+          -0.9880435466766357,
+          0.22941309213638306
+        ],
+        "tail": [
+          -0.27704015374183655,
+          -0.885031521320343,
+          0.18338137865066528
+        ]
+      },
+      {
+        "name": "horse R Clavicle",
+        "head": [
+          -0.4870283901691437,
+          -0.9069012999534607,
+          1.5851186513900757
+        ],
+        "tail": [
+          -0.8396807312965393,
+          -0.8899289965629578,
+          1.674004077911377
+        ]
+      },
+      {
+        "name": "horse R UpperArm",
+        "head": [
+          -0.5718782544136047,
+          -1.0932128429412842,
+          1.2840527296066284
+        ],
+        "tail": [
+          -0.5712555646896362,
+          -0.7509055733680725,
+          1.472461223602295
+        ]
+      },
+      {
+        "name": "horse R Forearm",
+        "head": [
+          -0.5756053924560547,
+          -0.9048075079917908,
+          0.9417634606361389
+        ],
+        "tail": [
+          -0.5767379999160767,
+          -0.5888088345527649,
+          0.9285848140716553
+        ]
+      },
+      {
+        "name": "horse R Hand",
+        "head": [
+          -0.578446626663208,
+          -0.9179958701133728,
+          0.6257759928703308
+        ],
+        "tail": [
+          -0.28487420082092285,
+          -0.9171631932258606,
+          0.6248985528945923
+        ]
+      },
+      {
+        "name": "horse R Finger0",
+        "head": [
+          -0.579246997833252,
+          -0.9439643621444702,
+          0.3333529829978943
+        ],
+        "tail": [
+          -0.5832759141921997,
+          -0.8400842547416687,
+          0.289314866065979
+        ]
+      },
+      {
+        "name": "horse R Finger01",
+        "head": [
+          -0.5796716809272766,
+          -0.9880442023277283,
+          0.2294134497642517
+        ],
+        "tail": [
+          -0.5837079882621765,
+          -0.8850322961807251,
+          0.18338173627853394
+        ]
+      },
+      {
+        "name": "horse L Thigh",
+        "head": [
+          -0.30088233947753906,
+          0.25368550419807434,
+          1.4012812376022339
+        ],
+        "tail": [
+          -0.24204584956169128,
+          -0.09349720180034637,
+          1.5446840524673462
+        ]
+      },
+      {
+        "name": "horse L Calf",
+        "head": [
+          -0.25858432054519653,
+          0.11558087170124054,
+          1.0495712757110596
+        ],
+        "tail": [
+          -0.18272878229618073,
+          -0.24419476091861725,
+          0.8761482834815979
+        ]
+      },
+      {
+        "name": "horse L Foot",
+        "head": [
+          -0.2743607461452484,
+          0.28926703333854675,
+          0.682348906993866
+        ],
+        "tail": [
+          -0.2954028248786926,
+          0.2350139021873474,
+          0.3129243850708008
+        ]
+      },
+      {
+        "name": "horse L Toe0",
+        "head": [
+          -0.2953410744667053,
+          0.263637512922287,
+          0.30983904004096985
+        ],
+        "tail": [
+          -0.2949898838996887,
+          0.18357175588607788,
+          0.3273232579231262
+        ]
+      },
+      {
+        "name": "horse L Toe01",
+        "head": [
+          -0.2999389171600342,
+          0.24616147577762604,
+          0.22990284860134125
+        ],
+        "tail": [
+          -0.2995877265930176,
+          0.16609570384025574,
+          0.24738703668117523
+        ]
+      },
+      {
+        "name": "horse R Thigh",
+        "head": [
+          -0.5598731637001038,
+          0.2536846995353699,
+          1.4012811183929443
+        ],
+        "tail": [
+          -0.618707537651062,
+          -0.0934983342885971,
+          1.5446839332580566
+        ]
+      },
+      {
+        "name": "horse R Calf",
+        "head": [
+          -0.6021704077720642,
+          0.11557985097169876,
+          1.0495712757110596
+        ],
+        "tail": [
+          -0.6780237555503845,
+          -0.2441963106393814,
+          0.8761482834815979
+        ]
+      },
+      {
+        "name": "horse R Foot",
+        "head": [
+          -0.5863951444625854,
+          0.2892661988735199,
+          0.6823488473892212
+        ],
+        "tail": [
+          -0.565352737903595,
+          0.2350131720304489,
+          0.31292450428009033
+        ]
+      },
+      {
+        "name": "horse R Toe0",
+        "head": [
+          -0.5654146075248718,
+          0.2636367380619049,
+          0.3098392188549042
+        ],
+        "tail": [
+          -0.5657653212547302,
+          0.183570995926857,
+          0.32732343673706055
+        ]
+      },
+      {
+        "name": "horse R Toe01",
+        "head": [
+          -0.5608166456222534,
+          0.24616055190563202,
+          0.22990308701992035
+        ],
+        "tail": [
+          -0.5611673593521118,
+          0.1660948097705841,
+          0.24738727509975433
+        ]
+      },
+      {
+        "name": "horse Tail",
+        "head": [
+          -0.4303780496120453,
+          0.3407147526741028,
+          1.5620619058609009
+        ],
+        "tail": [
+          -0.4303795397281647,
+          0.37620481848716736,
+          1.7705466747283936
+        ]
+      },
+      {
+        "name": "horse Tail1",
+        "head": [
+          -0.4303778111934662,
+          0.5491625070571899,
+          1.526355504989624
+        ],
+        "tail": [
+          -0.4303797483444214,
+          0.5708150267601013,
+          1.8020963668823242
+        ]
+      },
+      {
+        "name": "horse Tail2",
+        "head": [
+          -0.4303775429725647,
+          0.8248817920684814,
+          1.5044314861297607
+        ],
+        "tail": [
+          -0.4303799569606781,
+          0.8299161791801453,
+          1.8472535610198975
+        ]
+      },
+      {
+        "name": "horse Tail3",
+        "head": [
+          -0.43037721514701843,
+          1.167698860168457,
+          1.499074935913086
+        ],
+        "tail": [
+          -0.4303796589374542,
+          1.1581631898880005,
+          1.8418012857437134
+        ]
+      }
+    ],
+    "qa": {
+      "ok": true,
+      "pass": true,
+      "errors": [],
+      "warnings": [
+        "part_head: duplicate verts=123 loose verts=0",
+        "part_neck: duplicate verts=15 loose verts=0",
+        "part_fore_left: duplicate verts=26 loose verts=0",
+        "part_fore_right: duplicate verts=26 loose verts=0",
+        "part_thorax: duplicate verts=5 loose verts=0",
+        "part_pelvis: duplicate verts=16 loose verts=0",
+        "part_hind_left: duplicate verts=27 loose verts=0",
+        "part_tail: ~19.18% UV overlap (ok only if mirrored/stacked on purpose; bakes break)",
+        "part_tail: duplicate verts=16 loose verts=0",
+        "part_hind_right: duplicate verts=27 loose verts=0"
+      ],
+      "ground_z": 0.0,
+      "zfighting": [],
+      "floating": [],
+      "back_to_back": [],
+      "enclosed": [],
+      "objects": {
+        "part_head": {
+          "verts": 717,
+          "faces": 1148,
+          "tris": 1148,
+          "ngons": 0,
+          "boundary_edges": 272,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 123,
+          "islands": 9,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 4.7
+        },
+        "part_neck": {
+          "verts": 161,
+          "faces": 232,
+          "tris": 232,
+          "ngons": 0,
+          "boundary_edges": 84,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 15,
+          "islands": 3,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 4.4
+        },
+        "part_fore_left": {
+          "verts": 200,
+          "faces": 327,
+          "tris": 327,
+          "ngons": 0,
+          "boundary_edges": 69,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 26,
+          "islands": 2,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 3.6
+        },
+        "part_fore_right": {
+          "verts": 198,
+          "faces": 322,
+          "tris": 322,
+          "ngons": 0,
+          "boundary_edges": 70,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 26,
+          "islands": 2,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 3.4
+        },
+        "part_shoulder": {
+          "verts": 46,
+          "faces": 71,
+          "tris": 71,
+          "ngons": 0,
+          "boundary_edges": 19,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 0,
+          "islands": 1,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 0.9
+        },
+        "part_thorax": {
+          "verts": 153,
+          "faces": 242,
+          "tris": 242,
+          "ngons": 0,
+          "boundary_edges": 62,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 5,
+          "islands": 1,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 8.3
+        },
+        "part_pelvis": {
+          "verts": 101,
+          "faces": 113,
+          "tris": 113,
+          "ngons": 0,
+          "boundary_edges": 83,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 16,
+          "islands": 3,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 1.7
+        },
+        "part_hind_left": {
+          "verts": 209,
+          "faces": 341,
+          "tris": 341,
+          "ngons": 0,
+          "boundary_edges": 73,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 27,
+          "islands": 2,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 3.7
+        },
+        "part_tail": {
+          "verts": 94,
+          "faces": 134,
+          "tris": 134,
+          "ngons": 0,
+          "boundary_edges": 48,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 16,
+          "islands": 3,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 19.18,
+          "uv_coverage_pct": 2.4
+        },
+        "part_hind_right": {
+          "verts": 211,
+          "faces": 342,
+          "tris": 342,
+          "ngons": 0,
+          "boundary_edges": 76,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 27,
+          "islands": 2,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 3.7
+        }
+      }
+    }
+  },
+  {
+    "animal": "cow",
+    "parts": [
+      {
+        "name": "part_fore_right",
+        "region": "fore_right",
+        "triangles": 302,
+        "vertices": 187,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_shoulder",
+        "region": "shoulder",
+        "triangles": 64,
+        "vertices": 67,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_thorax",
+        "region": "thorax",
+        "triangles": 470,
+        "vertices": 321,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_neck",
+        "region": "neck",
+        "triangles": 30,
+        "vertices": 35,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_head",
+        "region": "head",
+        "triangles": 728,
+        "vertices": 460,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_fore_left",
+        "region": "fore_left",
+        "triangles": 302,
+        "vertices": 187,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_hind_right",
+        "region": "hind_right",
+        "triangles": 273,
+        "vertices": 185,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_pelvis",
+        "region": "pelvis",
+        "triangles": 34,
+        "vertices": 31,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_tail",
+        "region": "tail",
+        "triangles": 90,
+        "vertices": 61,
+        "materials": 1,
+        "uv_sets": 1
+      },
+      {
+        "name": "part_hind_left",
+        "region": "hind_left",
+        "triangles": 271,
+        "vertices": 171,
+        "materials": 1,
+        "uv_sets": 1
+      }
+    ],
+    "triangles": 2564,
+    "bounds_blender": {
+      "min": [
+        -1.17899489402771,
+        -0.3526514172554016,
+        5.3512749786932545e-14
+      ],
+      "max": [
+        1.1789947748184204,
+        0.3526514172554016,
+        1.4491770267486572
+      ]
+    },
+    "bones": [
+      {
+        "name": "cow Pelvis",
+        "head": [
+          -0.9085163474082947,
+          0.7731289267539978,
+          1.508581519126892
+        ],
+        "tail": [
+          -0.908515989780426,
+          0.6648739576339722,
+          1.508581519126892
+        ]
+      },
+      {
+        "name": "cow Spine",
+        "head": [
+          -0.9085163474082947,
+          0.6715901494026184,
+          1.5461183786392212
+        ],
+        "tail": [
+          -0.9085175395011902,
+          0.7067017555236816,
+          1.3128511905670166
+        ]
+      },
+      {
+        "name": "cow Spine1",
+        "head": [
+          -0.9085147976875305,
+          0.260201096534729,
+          1.4845304489135742
+        ],
+        "tail": [
+          -0.9085168838500977,
+          0.3221204876899719,
+          1.073163390159607
+        ]
+      },
+      {
+        "name": "cow Spine2",
+        "head": [
+          -0.9085132479667664,
+          -0.15121489763259888,
+          1.4229377508163452
+        ],
+        "tail": [
+          -0.9085142612457275,
+          -0.10805921256542206,
+          1.2403790950775146
+        ]
+      },
+      {
+        "name": "cow Neck",
+        "head": [
+          -0.9085116982460022,
+          -0.5362205505371094,
+          1.1941953897476196
+        ],
+        "tail": [
+          -0.9085119962692261,
+          -0.6581178903579712,
+          1.030656337738037
+        ]
+      },
+      {
+        "name": "cow Neck1",
+        "head": [
+          -0.9085108041763306,
+          -0.6996639370918274,
+          1.3162208795547485
+        ],
+        "tail": [
+          -0.9085109829902649,
+          -0.8481073379516602,
+          1.1763339042663574
+        ]
+      },
+      {
+        "name": "cow Neck2",
+        "head": [
+          -0.9085100293159485,
+          -0.8394344449043274,
+          1.4647737741470337
+        ],
+        "tail": [
+          -0.9085099697113037,
+          -1.0099377632141113,
+          1.3527731895446777
+        ]
+      },
+      {
+        "name": "cow Head",
+        "head": [
+          -0.9085092544555664,
+          -0.9514350295066833,
+          1.6352771520614624
+        ],
+        "tail": [
+          -0.9085096716880798,
+          -0.9341335892677307,
+          1.5701675415039062
+        ]
+      },
+      {
+        "name": "cow Ear R",
+        "head": [
+          -1.030544638633728,
+          -0.9324729442596436,
+          1.7053323984146118
+        ],
+        "tail": [
+          -1.0130560398101807,
+          -0.9974794387817383,
+          1.7027026414871216
+        ]
+      },
+      {
+        "name": "cow Ear L",
+        "head": [
+          -0.7875723838806152,
+          -0.9256005883216858,
+          1.7056103944778442
+        ],
+        "tail": [
+          -0.8050602674484253,
+          -0.9906072020530701,
+          1.7029811143875122
+        ]
+      },
+      {
+        "name": "cow Xtra Mouth",
+        "head": [
+          -0.9075790047645569,
+          -0.9453778862953186,
+          1.5199426412582397
+        ],
+        "tail": [
+          -0.9075788259506226,
+          -0.9775238633155823,
+          1.5791478157043457
+        ]
+      },
+      {
+        "name": "cow Xtra Eye L",
+        "head": [
+          -0.9075828194618225,
+          -1.0030899047851562,
+          1.5920392274856567
+        ],
+        "tail": [
+          -0.91139817237854,
+          -0.9797348380088806,
+          1.6551153659820557
+        ]
+      },
+      {
+        "name": "cow Xtra Eye R",
+        "head": [
+          -0.9075828790664673,
+          -1.0031416416168213,
+          1.5919052362442017
+        ],
+        "tail": [
+          -0.9113160371780396,
+          -1.0264331102371216,
+          1.5288008451461792
+        ]
+      },
+      {
+        "name": "cow L Clavicle",
+        "head": [
+          -0.7850841283798218,
+          -0.1603294163942337,
+          1.566466212272644
+        ],
+        "tail": [
+          -0.31423234939575195,
+          -0.1892540156841278,
+          1.689268946647644
+        ]
+      },
+      {
+        "name": "cow L UpperArm",
+        "head": [
+          -0.7127184271812439,
+          -0.48707589507102966,
+          1.2120394706726074
+        ],
+        "tail": [
+          -0.7120725512504578,
+          -0.24460604786872864,
+          1.3737989664077759
+        ]
+      },
+      {
+        "name": "cow L Forearm",
+        "head": [
+          -0.7353172302246094,
+          -0.3257614076137543,
+          0.9703266620635986
+        ],
+        "tail": [
+          -0.7457966208457947,
+          -0.04419422894716263,
+          0.9878240823745728
+        ]
+      },
+      {
+        "name": "cow L Hand",
+        "head": [
+          -0.7545434236526489,
+          -0.3090055584907532,
+          0.6891762018203735
+        ],
+        "tail": [
+          -0.7442244291305542,
+          -0.5244653820991516,
+          0.7212470173835754
+        ]
+      },
+      {
+        "name": "cow L Finger0",
+        "head": [
+          -0.7542182803153992,
+          -0.341096967458725,
+          0.4734727144241333
+        ],
+        "tail": [
+          -0.7511648535728455,
+          -0.40203604102134705,
+          0.49780702590942383
+        ]
+      },
+      {
+        "name": "cow L Finger01",
+        "head": [
+          -0.7533965706825256,
+          -0.3654201328754425,
+          0.41245830059051514
+        ],
+        "tail": [
+          -0.7506477236747742,
+          -0.4182890057563782,
+          0.45134758949279785
+        ]
+      },
+      {
+        "name": "cow R Clavicle",
+        "head": [
+          -1.0319401025772095,
+          -0.16033050417900085,
+          1.5664665699005127
+        ],
+        "tail": [
+          -1.502791404724121,
+          -0.189259335398674,
+          1.6892706155776978
+        ]
+      },
+      {
+        "name": "cow R UpperArm",
+        "head": [
+          -1.1043040752410889,
+          -0.487077534198761,
+          1.2120397090911865
+        ],
+        "tail": [
+          -1.1046561002731323,
+          -0.2433265745639801,
+          1.3718630075454712
+        ]
+      },
+      {
+        "name": "cow R Forearm",
+        "head": [
+          -1.082160472869873,
+          -0.3276938796043396,
+          0.9690077304840088
+        ],
+        "tail": [
+          -1.0719316005706787,
+          -0.04623815789818764,
+          0.9883506894111633
+        ]
+      },
+      {
+        "name": "cow R Hand",
+        "head": [
+          -1.0633071660995483,
+          -0.30906352400779724,
+          0.6879499554634094
+        ],
+        "tail": [
+          -1.0733767747879028,
+          -0.52474045753479,
+          0.718610405921936
+        ]
+      },
+      {
+        "name": "cow R Finger0",
+        "head": [
+          -1.0638747215270996,
+          -0.3397306501865387,
+          0.4720398187637329
+        ],
+        "tail": [
+          -1.066838264465332,
+          -0.40083202719688416,
+          0.4959750175476074
+        ]
+      },
+      {
+        "name": "cow R Finger01",
+        "head": [
+          -1.0647501945495605,
+          -0.363651305437088,
+          0.41086721420288086
+        ],
+        "tail": [
+          -1.0673985481262207,
+          -0.41677847504615784,
+          0.44941002130508423
+        ]
+      },
+      {
+        "name": "cow Xtra Helper",
+        "head": [
+          -0.907579779624939,
+          -0.16683416068553925,
+          1.2360013723373413
+        ],
+        "tail": [
+          -0.9075809121131897,
+          -0.14485648274421692,
+          1.0497031211853027
+        ]
+      },
+      {
+        "name": "cow L Thigh",
+        "head": [
+          -0.6989278793334961,
+          0.7731293439865112,
+          1.5085813999176025
+        ],
+        "tail": [
+          -0.6310601234436035,
+          0.4308004081249237,
+          1.6091432571411133
+        ]
+      },
+      {
+        "name": "cow L Calf",
+        "head": [
+          -0.7080759406089783,
+          0.6691284775733948,
+          1.160719633102417
+        ],
+        "tail": [
+          -0.6652140617370605,
+          0.32832419872283936,
+          0.9467839598655701
+        ]
+      },
+      {
+        "name": "cow L Foot",
+        "head": [
+          -0.7712008953094482,
+          0.8759152293205261,
+          0.8186560869216919
+        ],
+        "tail": [
+          -0.7389037013053894,
+          0.6927506327629089,
+          0.5402567386627197
+        ]
+      },
+      {
+        "name": "cow L Toe0",
+        "head": [
+          -0.7659776210784912,
+          0.8769492506980896,
+          0.483887255191803
+        ],
+        "tail": [
+          -0.7554075121879578,
+          0.8170039653778076,
+          0.510665237903595
+        ]
+      },
+      {
+        "name": "cow L Toe01",
+        "head": [
+          -0.7613276243209839,
+          0.8505781292915344,
+          0.4230172038078308
+        ],
+        "tail": [
+          -0.7517255544662476,
+          0.7961228489875793,
+          0.45995837450027466
+        ]
+      },
+      {
+        "name": "cow R Thigh",
+        "head": [
+          -1.1181048154830933,
+          0.77312833070755,
+          1.508581280708313
+        ],
+        "tail": [
+          -1.1890389919281006,
+          0.431959867477417,
+          1.6109542846679688
+        ]
+      },
+      {
+        "name": "cow R Calf",
+        "head": [
+          -1.1111090183258057,
+          0.6674308180809021,
+          1.1611813306808472
+        ],
+        "tail": [
+          -1.1577707529067993,
+          0.3269318640232086,
+          0.9475548267364502
+        ]
+      },
+      {
+        "name": "cow R Foot",
+        "head": [
+          -1.0468451976776123,
+          0.8734062314033508,
+          0.8188403844833374
+        ],
+        "tail": [
+          -1.0791435241699219,
+          0.6902311444282532,
+          0.5404255390167236
+        ]
+      },
+      {
+        "name": "cow R Toe0",
+        "head": [
+          -1.0520787239074707,
+          0.8745759725570679,
+          0.48405343294143677
+        ],
+        "tail": [
+          -1.0626485347747803,
+          0.8146304488182068,
+          0.5108315348625183
+        ]
+      },
+      {
+        "name": "cow R Toe01",
+        "head": [
+          -1.0567286014556885,
+          0.8482047915458679,
+          0.4231831431388855
+        ],
+        "tail": [
+          -1.0663304328918457,
+          0.7937493324279785,
+          0.4601244330406189
+        ]
+      },
+      {
+        "name": "cow Tail",
+        "head": [
+          -0.9085176587104797,
+          0.8803663849830627,
+          1.6760406494140625
+        ],
+        "tail": [
+          -0.9085202813148499,
+          1.1168574094772339,
+          1.799048662185669
+        ]
+      },
+      {
+        "name": "cow Tail1",
+        "head": [
+          -0.9085177779197693,
+          1.0032532215118408,
+          1.4394868612289429
+        ],
+        "tail": [
+          -0.9085198640823364,
+          1.2024835348129272,
+          1.4280564785003662
+        ]
+      },
+      {
+        "name": "cow Tail2",
+        "head": [
+          -0.9085181355476379,
+          0.9916808605194092,
+          1.2402647733688354
+        ],
+        "tail": [
+          -0.9085200428962708,
+          1.1704328060150146,
+          1.2376172542572021
+        ]
+      },
+      {
+        "name": "cow Tail3",
+        "head": [
+          -0.9085185527801514,
+          0.9888833165168762,
+          1.061515212059021
+        ],
+        "tail": [
+          -0.908520519733429,
+          1.1777255535125732,
+          1.062651515007019
+        ]
+      },
+      {
+        "name": "cow Tail4",
+        "head": [
+          -0.9085190296173096,
+          0.9899070858955383,
+          0.8726723790168762
+        ],
+        "tail": [
+          -0.9085209965705872,
+          1.1785305738449097,
+          0.8818309903144836
+        ]
+      }
+    ],
+    "qa": {
+      "ok": true,
+      "pass": true,
+      "errors": [],
+      "warnings": [
+        "part_fore_right: duplicate verts=24 loose verts=0",
+        "part_shoulder: duplicate verts=10 loose verts=0",
+        "part_thorax: duplicate verts=36 loose verts=0",
+        "part_neck: duplicate verts=2 loose verts=0",
+        "part_head: duplicate verts=84 loose verts=0",
+        "part_fore_left: duplicate verts=24 loose verts=0",
+        "part_hind_right: duplicate verts=39 loose verts=0",
+        "part_pelvis: duplicate verts=3 loose verts=0",
+        "part_tail: duplicate verts=10 loose verts=0",
+        "part_hind_left: duplicate verts=27 loose verts=0"
+      ],
+      "ground_z": 0.0,
+      "zfighting": [],
+      "floating": [],
+      "back_to_back": [],
+      "enclosed": [],
+      "objects": {
+        "part_fore_right": {
+          "verts": 187,
+          "faces": 302,
+          "tris": 302,
+          "ngons": 0,
+          "boundary_edges": 68,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 24,
+          "islands": 2,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 5.5
+        },
+        "part_shoulder": {
+          "verts": 67,
+          "faces": 64,
+          "tris": 64,
+          "ngons": 0,
+          "boundary_edges": 60,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 10,
+          "islands": 5,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 2.9
+        },
+        "part_thorax": {
+          "verts": 321,
+          "faces": 470,
+          "tris": 470,
+          "ngons": 0,
+          "boundary_edges": 160,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 36,
+          "islands": 6,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 18.2
+        },
+        "part_neck": {
+          "verts": 35,
+          "faces": 30,
+          "tris": 30,
+          "ngons": 0,
+          "boundary_edges": 38,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 2,
+          "islands": 1,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 1.4
+        },
+        "part_head": {
+          "verts": 460,
+          "faces": 728,
+          "tris": 728,
+          "ngons": 0,
+          "boundary_edges": 188,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 84,
+          "islands": 6,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 7.0
+        },
+        "part_fore_left": {
+          "verts": 187,
+          "faces": 302,
+          "tris": 302,
+          "ngons": 0,
+          "boundary_edges": 68,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 24,
+          "islands": 2,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 5.5
+        },
+        "part_hind_right": {
+          "verts": 185,
+          "faces": 273,
+          "tris": 273,
+          "ngons": 0,
+          "boundary_edges": 91,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 39,
+          "islands": 4,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 5.0
+        },
+        "part_pelvis": {
+          "verts": 31,
+          "faces": 34,
+          "tris": 34,
+          "ngons": 0,
+          "boundary_edges": 26,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 3,
+          "islands": 1,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 1.4
+        },
+        "part_tail": {
+          "verts": 61,
+          "faces": 90,
+          "tris": 90,
+          "ngons": 0,
+          "boundary_edges": 30,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 10,
+          "islands": 1,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 1.7
+        },
+        "part_hind_left": {
+          "verts": 171,
+          "faces": 271,
+          "tris": 271,
+          "ngons": 0,
+          "boundary_edges": 65,
+          "nonmanifold_edges": 0,
+          "wire_edges": 0,
+          "loose_verts": 0,
+          "degenerate_faces": 0,
+          "zero_length_edges": 0,
+          "inconsistent_normals_edges": 0,
+          "duplicate_verts": 27,
+          "islands": 3,
+          "inside_out_islands": 0,
+          "scale": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "materials": 1,
+          "unweighted_verts": 0,
+          "verts_over_4_influences": 0,
+          "uv_maps": 1,
+          "uv_oob_pct": 0.0,
+          "uv_zero_area_faces": 0,
+          "uv_overlap_pct": 0.0,
+          "uv_coverage_pct": 4.9
+        }
+      }
+    }
+  }
+]

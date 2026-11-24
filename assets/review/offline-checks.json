@@ -1,0 +1,17 @@
+{
+  "pass": true,
+  "checks": [
+    "horse: carga autónoma sin conexión",
+    "horse: arrastre real con puntero",
+    "horse: montaje local",
+    "cow: carga autónoma sin conexión",
+    "cow: arrastre real con puntero",
+    "cow: montaje local",
+    "MR local identificado como no disponible",
+    "Créditos y licencias incorporados",
+    "Cero peticiones HTTP y cero errores"
+  ],
+  "errors": [],
+  "requests": [],
+  "headset_tested": false
+}

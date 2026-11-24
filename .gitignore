@@ -1,0 +1,8 @@
+node_modules/
+.env
+.env.*
+*.local.mjs
+*.log
+*.zip
+*.blend1
+assets/review/*.png
