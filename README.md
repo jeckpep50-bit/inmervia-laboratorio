@@ -21,10 +21,13 @@ La comprobación de escritorio no certifica el funcionamiento en las Quest.
 
 ## Estado de alojamiento
 
-Repositorio privado. La carpeta `docs/` está preparada para GitHub Pages,
-con rutas relativas y `.nojekyll`. GitHub Pages todavía no está activado:
-la publicación web depende de la autorización para hacerla accesible en Internet
-y de las funciones disponibles en el plan de GitHub. No hay un enlace Pages activo.
+Repositorio público, publicado con autorización de su propietario.
+GitHub Pages está configurado desde `main`, carpeta `docs/`, con rutas relativas
+y `.nojekyll`.
+
+**[Abrir la experiencia](https://jeckpep50-bit.github.io/inmervia-laboratorio-animal/)**.
+La web y sus recursos son accesibles en Internet sin iniciar sesión en ChatGPT.
+Las nuevas entregas de `main` se publican mediante GitHub Pages.
 
 ## Alcance y límites
 
