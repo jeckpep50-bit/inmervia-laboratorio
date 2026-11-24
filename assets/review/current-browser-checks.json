@@ -1,8 +1,9 @@
 {
-  "url": "http://127.0.0.1:64348/",
+  "url": "http://127.0.0.1:53275/",
   "pass": true,
   "checks": [
     "Aplicación responde HTTP 200",
+    "Entrada MR visible y con nombre estable",
     "horse: diez regiones",
     "horse: selección e información",
     "horse: postura",
@@ -29,6 +30,8 @@
     "Reintentar recupera la carga",
     "Fallo inicial recuperable",
     "Reintento inicial completa el modelo",
+    "Una detección negativa permite solicitar MR",
+    "El rechazo de MR muestra un diagnóstico recuperable",
     "Sin errores JavaScript ni recursos inesperados"
   ],
   "errors": [],

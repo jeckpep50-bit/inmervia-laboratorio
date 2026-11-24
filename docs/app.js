@@ -320,8 +320,8 @@ function showLoading(id) {
   $('retry-load').hidden = true;
 }
 function updateXRButton() {
-  $('enter-mr').disabled =
-    !xrSupported || !current || xrStarting || loading || renderer.xr.isPresenting;
+  $('enter-mr').disabled = xrStarting || loading || renderer.xr.isPresenting;
+  $('enter-mr').textContent = xrStarting ? 'Solicitando permiso…' : 'Entrar en realidad mixta';
 }
 async function loadAnimal(id) {
   if (!Object.hasOwn(ANIMALS, id)) return false;
@@ -846,21 +846,24 @@ renderer.xr.addEventListener('sessionend', () => {
 });
 $('enter-mr').addEventListener('click', async () => {
   if (loading || !current || xrStarting || renderer.xr.isPresenting) return;
+  if (!window.isSecureContext || location.protocol === 'file:' || !navigator.xr) {
+    showXRDiagnostics();
+    return;
+  }
   xrStarting = true;
   updateXRButton();
   try {
     await startImmersiveSession(navigator.xr, renderer.xr);
   } catch (e) {
     status('No se pudo iniciar MR: ' + e.message);
+    showXRDiagnostics(e);
   } finally {
     xrStarting = false;
     updateXRButton();
   }
 });
 async function checkXR() {
-  const b = $('enter-mr');
   if (!window.isSecureContext || location.protocol === 'file:') {
-    b.textContent = 'MR requiere HTTPS';
     defaultStatus =
       'Exploración 3D local disponible. Abre una dirección HTTPS en las gafas para utilizar realidad mixta.';
     status(defaultStatus);
@@ -869,20 +872,50 @@ async function checkXR() {
   try {
     xrSupported = !!navigator.xr && (await navigator.xr.isSessionSupported('immersive-ar'));
     if (xrSupported) {
-      b.textContent = 'Entrar en realidad mixta';
       defaultStatus = 'MR disponible. Utiliza los mandos para seleccionar y agarrar.';
     } else {
-      b.textContent = 'Abrir en Meta Quest';
-      defaultStatus =
-        'Exploración 3D disponible. Para MR, abre este enlace en el navegador de las Meta Quest.';
+      defaultStatus = navigator.xr
+        ? 'La comprobación automática no confirmó MR. Pulsa «Entrar en realidad mixta» para solicitar el permiso.'
+        : 'Vista 3D disponible. Para MR, utiliza Meta Quest Browser y abre este enlace directamente.';
     }
   } catch {
-    b.textContent = 'MR no disponible';
     defaultStatus = 'No se pudo comprobar la compatibilidad de realidad mixta.';
   }
   updateXRButton();
   status(defaultStatus);
 }
+function xrDiagnostic(error) {
+  return {
+    version: '0.2.0',
+    url: location.href,
+    secureContext: isSecureContext,
+    embedded: window.self !== window.top,
+    webXR: !!navigator.xr,
+    arProbe: xrSupported,
+    userAgent: navigator.userAgent,
+    error: error ? { name: error.name, message: error.message } : null,
+  };
+}
+function showXRDiagnostics(error) {
+  const available = !!navigator.xr && isSecureContext && location.protocol !== 'file:';
+  $('xr-diagnostics-summary').textContent = error
+    ? 'El navegador no pudo iniciar la sesión: ' + error.message
+    : available
+      ? 'El navegador ofrece WebXR. Pulsa «Entrar en realidad mixta» y acepta el permiso.'
+      : 'Este navegador no está ofreciendo acceso a realidad mixta. Revisa los pasos siguientes.';
+  $('xr-diagnostics-output').textContent = JSON.stringify(xrDiagnostic(error), null, 2);
+  const dialog = $('xr-diagnostics-dialog');
+  if (!dialog.open) dialog.showModal();
+}
+$('xr-diagnostics').addEventListener('click', () => showXRDiagnostics());
+$('copy-xr-diagnostics').addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText($('xr-diagnostics-output').textContent);
+    $('copy-xr-diagnostics').textContent = 'Diagnóstico copiado';
+  } catch {
+    $('copy-xr-diagnostics').textContent = 'Selecciona y copia el diagnóstico mostrado';
+  }
+});
 function resize() {
   const w = viewer.clientWidth,
     h = viewer.clientHeight;

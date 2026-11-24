@@ -37,6 +37,11 @@ try {
   const response = await page.goto(url);
   ok('Aplicación responde HTTP 200', response.status() === 200);
   await page.waitForFunction(() => window.lab?.ready);
+  ok(
+    'Entrada MR visible y con nombre estable',
+    (await page.locator('#enter-mr').isVisible()) &&
+      (await page.locator('#enter-mr').textContent()) === 'Entrar en realidad mixta',
+  );
   for (const id of ['horse', 'cow']) {
     await page.locator(`[data-animal="${id}"]`).click();
     await page.waitForFunction((id) => window.lab.ready && window.lab.animal === id, id);
@@ -240,6 +245,37 @@ try {
   ok(
     'Reintento inicial completa el modelo',
     await initial.evaluate(() => window.lab.animal === 'horse'),
+  );
+  const questProbe = await context.newPage();
+  await questProbe.addInitScript(() => {
+    window.xrRequests = 0;
+    Object.defineProperty(navigator, 'xr', {
+      value: {
+        isSessionSupported: async () => false,
+        requestSession: async () => {
+          window.xrRequests++;
+          throw new DOMException('Permiso rechazado en la prueba', 'NotAllowedError');
+        },
+        addEventListener() {},
+        removeEventListener() {},
+      },
+      configurable: true,
+    });
+  });
+  await questProbe.goto(url);
+  await questProbe.waitForFunction(() => window.lab?.ready);
+  await questProbe.locator('#enter-mr').click();
+  await questProbe.locator('#xr-diagnostics-dialog').waitFor({ state: 'visible' });
+  ok(
+    'Una detección negativa permite solicitar MR',
+    await questProbe.evaluate(() => window.xrRequests === 1),
+  );
+  ok(
+    'El rechazo de MR muestra un diagnóstico recuperable',
+    await questProbe
+      .locator('#xr-diagnostics-output')
+      .textContent()
+      .then((text) => text.includes('NotAllowedError')),
   );
   ok('Sin errores JavaScript ni recursos inesperados', errors.length === 0);
   await fs.writeFile(

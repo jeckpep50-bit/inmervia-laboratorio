@@ -10,7 +10,7 @@
       content="Explora, articula y monta diez regiones externas de un caballo y una vaca en 3D y realidad mixta."
     />
     <link rel="icon" href="favicon.svg" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=0.2.0" />
     <script type="importmap">
       {
         "imports": {
@@ -30,6 +30,13 @@
       </div>
       <button id="help" class="subtle">Cómo usarlo</button>
     </header>
+    <section class="xr-launch" aria-label="Acceso a realidad mixta">
+      <div>
+        <strong>Lleva el animal a tu aula.</strong
+        ><span>Desde Meta Quest Browser, entra y acepta el permiso del visor.</span>
+      </div>
+      <button id="enter-mr" class="primary">Entrar en realidad mixta</button>
+    </section>
     <main>
       <aside>
         <div class="section-label">01 / ELIGE EL ANIMAL</div>
@@ -111,7 +118,7 @@
           <button id="reset-view" class="subtle">Centrar vista</button
           ><button id="labels" class="subtle">Mostrar nombres</button
           ><button id="reference" class="subtle">Ver referencia</button
-          ><button id="enter-mr" class="primary" disabled>Comprobando realidad mixta…</button>
+          ><button id="xr-diagnostics" class="subtle">Comprobar mis gafas</button>
         </div>
         <p class="xr-status" id="xr-status" role="status"></p>
       </section>
@@ -155,6 +162,21 @@
         exacta de este ejemplar.
       </p>
     </dialog>
-    <script type="module" src="app.js"></script>
+    <dialog id="xr-diagnostics-dialog">
+      <button class="close" data-close aria-label="Cerrar">×</button>
+      <h2>Conexión con tus gafas</h2>
+      <p id="xr-diagnostics-summary"></p>
+      <ol>
+        <li>Abre el enlace directamente en <strong>Meta Quest Browser</strong>.</li>
+        <li>Actualiza la página y acepta el permiso al pulsar «Entrar en realidad mixta».</li>
+        <li>Si la entrada falla, copia el diagnóstico para identificar el motivo.</li>
+      </ol>
+      <details>
+        <summary>Ver diagnóstico técnico · versión 0.2.0</summary>
+        <pre id="xr-diagnostics-output"></pre>
+      </details>
+      <button id="copy-xr-diagnostics">Copiar diagnóstico</button>
+    </dialog>
+    <script type="module" src="app.js?v=0.2.0"></script>
   </body>
 </html>
