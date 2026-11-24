@@ -50,6 +50,29 @@ No hay sincronización multijugador ni registro de datos personales.
 
 ## Validación
 
+Comandos de desarrollo:
+
+```sh
+npm ci
+npm run check
+npm test
+npm run format:check
+npx playwright install chromium
+npm run test:browser
+```
+
+`npm start` continúa funcionando sin instalar dependencias. Las dependencias son
+herramientas de desarrollo. Para usar un Chrome ya instalado en las pruebas,
+definir `TEST_BROWSER` con su ruta. `TEST_URL` permite comprobar una publicación
+HTTPS; sin esa variable, las pruebas abren su propio servidor local y lo cierran
+al terminar. Se utiliza un perfil temporal, sin datos del navegador del usuario.
+
+La depuración incorpora carga compartida de modelos, recuperación de errores,
+límites de tamaño, inicio MR con referencia de suelo obligatoria y limpieza de
+recursos al cerrar la página. Las pruebas de sesión usan dobles de prueba y no
+sustituyen una prueba física de gafas. El informe de inmersión y las prioridades
+de mejora están en [AUDITORIA.md](AUDITORIA.md).
+
 La versión de escritorio pasó 55 comprobaciones funcionales y su copia autónoma
 pasó otras 9 sin conexión, incluido arrastre real con puntero en ambos animales.
 Los informes conservan su alcance original: ninguna prueba física de gafas.

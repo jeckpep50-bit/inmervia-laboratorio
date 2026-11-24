@@ -1,0 +1,9 @@
+{
+  "scope": "Desktop Chromium, screenshot frame; not Quest FPS or a performance benchmark",
+  "metrics": {
+    "drawCalls": 12,
+    "triangles": 3274,
+    "geometries": 42,
+    "textures": 9
+  }
+}

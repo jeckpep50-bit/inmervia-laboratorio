@@ -1,20 +1,160 @@
 <!doctype html>
-<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#511d4c"><title>INMERVIA · Laboratorio animal</title><meta name="description" content="Explora, articula y monta diez regiones externas de un caballo y una vaca en 3D y realidad mixta."><link rel="icon" href="favicon.svg"><link rel="stylesheet" href="style.css"><script type="importmap">{"imports":{"three":"./vendor/three/three.module.js","three/addons/":"./vendor/three/addons/"}}</script></head>
-<body>
-<header><a class="brand" href="./" aria-label="INMERVIA · Inicio"><img src="brand.png" alt="INMERVIA · Educación inmersiva"></a><div class="header-title"><span>LABORATORIO ANIMAL</span><small>Explora. Comprende. Reconstruye.</small></div><button id="help" class="subtle">Cómo usarlo</button></header>
-<main><aside>
-<div class="section-label">01 / ELIGE EL ANIMAL</div><div class="segmented"><button data-animal="horse" class="active">Caballo</button><button data-animal="cow">Vaca</button></div>
-<div class="section-label">02 / EXPLORA A TU RITMO</div><div class="segmented"><button data-mode="explore" class="active">Explorar</button><button data-mode="assemble">Montar piezas</button></div>
-<div class="mode-note" id="mode-note">Selecciona una región para conocerla.</div><div class="section-label regions-head">REGIONES EXTERNAS <span id="visited">0 / 10</span></div><nav id="regions" aria-label="Regiones del animal"></nav>
-<section class="information" aria-live="polite"><div class="section-label" id="region-number">EMPIEZA POR UNA REGIÓN</div><h2 id="region-name">Observa desde otro ángulo</h2><p id="region-text">Gira el animal y selecciona una de sus diez regiones externas.</p><p class="challenge" id="challenge">Un animal a la vez. Todas sus perspectivas.</p></section><div class="review-note">Versión de demostración. Regiones y movimientos pendientes de revisión docente.</div>
-</aside><section class="workspace" aria-label="Visor tridimensional">
-<div class="stage-heading"><div><div class="eyebrow">ANATOMÍA EXTERNA · SECUNDARIA</div><h1 id="animal-name">Caballo</h1><p id="animal-scientific">Equus caballus</p></div><span class="badge">10 regiones · 3D + MR</span></div>
-<div id="viewer" aria-label="Modelo 3D interactivo" tabindex="0"></div><div class="load-state" id="load-state"><span class="spinner"></span>Preparando el animal…</div><div class="viewer-hint" id="viewer-hint">Arrastra para girar · Rueda para acercar · Clic para seleccionar</div>
-<section class="pose-card" id="pose-card"><label for="joint">ARTICULAR</label><select id="joint"></select><div class="range-row"><input id="pose" type="range" min="-25" max="25" step="1" value="0" aria-label="Movimiento ilustrativo"><output id="pose-value">0°</output></div><small>Movimiento ilustrativo; no indica un rango anatómico normal.</small><button id="reset-pose" class="text-button">Restablecer postura</button></section>
-<section class="assembly-card" id="assembly-card" hidden><strong id="assembly-count">10 / 10 piezas en su sitio</strong><p>Arrastra una pieza. Al acercarla a su lugar, encajará.</p><div class="button-row"><button id="explode">Separar piezas</button><button id="restore">Rearmar todo</button></div><div class="button-row"><button id="rotate-piece">Girar pieza 15°</button><button id="fit-piece">Encajar seleccionada</button></div><small>Segmentación didáctica de la superficie externa. No representa una disección ni órganos internos.</small></section>
-<div class="bottom-toolbar"><button id="reset-view" class="subtle">Centrar vista</button><button id="labels" class="subtle">Mostrar nombres</button><button id="reference" class="subtle">Ver referencia</button><button id="enter-mr" class="primary" disabled>Comprobando realidad mixta…</button></div><p class="xr-status" id="xr-status" role="status"></p>
-</section></main>
-<footer><span>INMERVIA · Educación inmersiva</span><a href="credits.html" target="_blank" rel="noopener">Créditos y alcance del prototipo</a></footer>
-<dialog id="help-dialog"><button class="close" data-close aria-label="Cerrar">×</button><span class="eyebrow">TU GUÍA DE EXPLORACIÓN</span><h2>Acércate al animal.</h2><p><strong>En computador:</strong> arrastra el fondo para girar, usa la rueda para acercarte y haz clic en una región. En «Montar piezas», arrastra directamente las piezas.</p><p><strong>En Meta Quest:</strong> abre este enlace desde el navegador de las gafas y pulsa «Entrar en realidad mixta». Apunta con el mando y pulsa el gatillo para seleccionar o usar el panel. En montaje, mantén pulsado el botón de agarre para mover una pieza y suéltalo para encajarla.</p><p><strong>En el panel de las gafas:</strong> puedes cambiar de animal, de modo, seleccionar regiones, ajustar el movimiento, separar piezas, restaurar el modelo, cambiar el tamaño y reubicarlo.</p><p class="callout">Esta demostración contiene la superficie externa y un rig de animación. No incorpora huesos, músculos u órganos anatómicos independientes. Los movimientos y límites requieren validación docente.</p><button data-close class="primary">Empezar a explorar</button></dialog>
-<dialog id="reference-dialog"><button class="close" data-close aria-label="Cerrar">×</button><h2>Referencia visual del caballo</h2><img src="reference/C1.jpg" alt="Caballo castaño de referencia, vista lateral"><p>Imagen proporcionada por Daniel. El modelo 3D es una base adaptada, no una reconstrucción exacta de este ejemplar.</p></dialog>
-<script type="module" src="app.js"></script></body></html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#511d4c" />
+    <title>INMERVIA · Laboratorio animal</title>
+    <meta
+      name="description"
+      content="Explora, articula y monta diez regiones externas de un caballo y una vaca en 3D y realidad mixta."
+    />
+    <link rel="icon" href="favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./vendor/three/three.module.js",
+          "three/addons/": "./vendor/three/addons/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="./" aria-label="INMERVIA · Inicio"
+        ><img src="brand.png" alt="INMERVIA · Educación inmersiva"
+      /></a>
+      <div class="header-title">
+        <span>LABORATORIO ANIMAL</span><small>Explora. Comprende. Reconstruye.</small>
+      </div>
+      <button id="help" class="subtle">Cómo usarlo</button>
+    </header>
+    <main>
+      <aside>
+        <div class="section-label">01 / ELIGE EL ANIMAL</div>
+        <div class="segmented">
+          <button data-animal="horse" class="active">Caballo</button
+          ><button data-animal="cow">Vaca</button>
+        </div>
+        <div class="section-label">02 / EXPLORA A TU RITMO</div>
+        <div class="segmented">
+          <button data-mode="explore" class="active">Explorar</button
+          ><button data-mode="assemble">Montar piezas</button>
+        </div>
+        <div class="mode-note" id="mode-note">Selecciona una región para conocerla.</div>
+        <div class="section-label regions-head">
+          REGIONES EXTERNAS <span id="visited">0 / 10</span>
+        </div>
+        <nav id="regions" aria-label="Regiones del animal"></nav>
+        <section class="information" aria-live="polite">
+          <div class="section-label" id="region-number">EMPIEZA POR UNA REGIÓN</div>
+          <h2 id="region-name">Observa desde otro ángulo</h2>
+          <p id="region-text">Gira el animal y selecciona una de sus diez regiones externas.</p>
+          <p class="challenge" id="challenge">Un animal a la vez. Todas sus perspectivas.</p>
+        </section>
+        <div class="review-note">
+          Versión de demostración. Regiones y movimientos pendientes de revisión docente.
+        </div>
+      </aside>
+      <section class="workspace" aria-label="Visor tridimensional">
+        <div class="stage-heading">
+          <div>
+            <div class="eyebrow">ANATOMÍA EXTERNA · SECUNDARIA</div>
+            <h1 id="animal-name">Caballo</h1>
+            <p id="animal-scientific">Equus caballus</p>
+          </div>
+          <span class="badge">10 regiones · 3D + MR</span>
+        </div>
+        <div id="viewer" aria-label="Modelo 3D interactivo" tabindex="0"></div>
+        <div class="load-state" id="load-state" role="status" aria-live="polite">
+          <span class="spinner" id="load-spinner"></span
+          ><span id="load-message">Preparando el animal…</span
+          ><button id="retry-load" hidden>Reintentar</button>
+        </div>
+        <div class="viewer-hint" id="viewer-hint">
+          Arrastra para girar · Rueda para acercar · Clic para seleccionar
+        </div>
+        <section class="pose-card" id="pose-card">
+          <label for="joint">ARTICULAR</label
+          ><select id="joint"></select>
+          <div class="range-row">
+            <input
+              id="pose"
+              type="range"
+              min="-25"
+              max="25"
+              step="1"
+              value="0"
+              aria-label="Movimiento ilustrativo"
+            /><output id="pose-value">0°</output>
+          </div>
+          <small>Movimiento ilustrativo; no indica un rango anatómico normal.</small
+          ><button id="reset-pose" class="text-button">Restablecer postura</button>
+        </section>
+        <section class="assembly-card" id="assembly-card" hidden>
+          <strong id="assembly-count">10 / 10 piezas en su sitio</strong>
+          <p>Arrastra una pieza. Al acercarla a su lugar, encajará.</p>
+          <div class="button-row">
+            <button id="explode">Separar piezas</button><button id="restore">Rearmar todo</button>
+          </div>
+          <div class="button-row">
+            <button id="rotate-piece">Girar pieza 15°</button
+            ><button id="fit-piece">Encajar seleccionada</button>
+          </div>
+          <small
+            >Segmentación didáctica de la superficie externa. No representa una disección ni órganos
+            internos.</small
+          >
+        </section>
+        <div class="bottom-toolbar">
+          <button id="reset-view" class="subtle">Centrar vista</button
+          ><button id="labels" class="subtle">Mostrar nombres</button
+          ><button id="reference" class="subtle">Ver referencia</button
+          ><button id="enter-mr" class="primary" disabled>Comprobando realidad mixta…</button>
+        </div>
+        <p class="xr-status" id="xr-status" role="status"></p>
+      </section>
+    </main>
+    <footer>
+      <span>INMERVIA · Educación inmersiva</span
+      ><a href="credits.html" target="_blank" rel="noopener">Créditos y alcance del prototipo</a>
+    </footer>
+    <dialog id="help-dialog">
+      <button class="close" data-close aria-label="Cerrar">×</button
+      ><span class="eyebrow">TU GUÍA DE EXPLORACIÓN</span>
+      <h2>Acércate al animal.</h2>
+      <p>
+        <strong>En computador:</strong> arrastra el fondo para girar, usa la rueda para acercarte y
+        haz clic en una región. En «Montar piezas», arrastra directamente las piezas.
+      </p>
+      <p>
+        <strong>En Meta Quest:</strong> abre este enlace desde el navegador de las gafas y pulsa
+        «Entrar en realidad mixta». Apunta con el mando y pulsa el gatillo para seleccionar o usar
+        el panel. En montaje, mantén pulsado el botón de agarre para mover una pieza y suéltalo para
+        encajarla.
+      </p>
+      <p>
+        <strong>En el panel de las gafas:</strong> puedes cambiar de animal, de modo, seleccionar
+        regiones, ajustar el movimiento, separar piezas, restaurar el modelo, cambiar el tamaño y
+        reubicarlo.
+      </p>
+      <p class="callout">
+        Esta demostración contiene la superficie externa y un rig de animación. No incorpora huesos,
+        músculos u órganos anatómicos independientes. Los movimientos y límites requieren validación
+        docente.
+      </p>
+      <button data-close class="primary">Empezar a explorar</button>
+    </dialog>
+    <dialog id="reference-dialog">
+      <button class="close" data-close aria-label="Cerrar">×</button>
+      <h2>Referencia visual del caballo</h2>
+      <img src="reference/C1.jpg" alt="Caballo castaño de referencia, vista lateral" />
+      <p>
+        Imagen proporcionada por Daniel. El modelo 3D es una base adaptada, no una reconstrucción
+        exacta de este ejemplar.
+      </p>
+    </dialog>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
