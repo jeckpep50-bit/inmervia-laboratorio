@@ -25,7 +25,7 @@ Repositorio público, publicado con autorización de su propietario.
 GitHub Pages está configurado desde `main`, carpeta `docs/`, con rutas relativas
 y `.nojekyll`.
 
-**[Abrir la experiencia](https://jeckpep50-bit.github.io/inmervia-laboratorio-animal/)**.
+**[Abrir la experiencia](https://jeckpep50-bit.github.io/inmervia-laboratorio/)**.
 La web y sus recursos son accesibles en Internet sin iniciar sesión en ChatGPT.
 Las nuevas entregas de `main` se publican mediante GitHub Pages.
 
