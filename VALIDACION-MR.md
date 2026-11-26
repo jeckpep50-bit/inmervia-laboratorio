@@ -1,3 +1,7 @@
+# Versión 0.4 · panel simplificado
+
+15 pruebas de lógica y servidor, 33 comprobaciones del navegador y 50 de experiencia con los dos modelos. El panel se prueba con rayos de mando simulados, conmutación de nombres, acoplamiento de etiquetas a las piezas y retorno de ambas animaciones a su postura inicial. Siguen pendientes la legibilidad estereoscópica y el tiempo de fotograma en el visor físico.
+
 # Aceptación de la versión 0.3
 
 Esta entrega mejora la línea base de `AUDITORIA.md`. Una captura de escritorio o

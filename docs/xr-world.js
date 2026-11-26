@@ -67,7 +67,6 @@ export class SpatialWorld {
   start(session) {
     this.stop();
     this.session = session;
-    this.captureRequested = false;
     this.group.visible = this.enabled;
     this.state.anchor = 'Sin ancla';
     this.state.occlusion = 'Esperando datos del espacio';
@@ -116,19 +115,6 @@ export class SpatialWorld {
     this.placing = !this.placing;
     this.marker.visible = false;
     return this.placing;
-  }
-  async captureRoom() {
-    if (typeof this.session?.initiateRoomCapture !== 'function')
-      return 'Configura el espacio de tu habitación desde los ajustes del visor.';
-    if (this.captureRequested)
-      return 'La configuración del espacio ya se solicitó durante esta sesión.';
-    this.captureRequested = true;
-    try {
-      await this.session.initiateRoomCapture();
-      return 'Configuración del espacio solicitada en las gafas.';
-    } catch (error) {
-      return 'No se pudo abrir la configuración: ' + error.message;
-    }
   }
   update(frame, reference) {
     if (!this.session || !frame || !reference) return;
@@ -261,12 +247,7 @@ export class SpatialWorld {
   }
   surfaceHit(ray) {
     this.raycaster.ray.copy(ray);
-    return (
-      this.raycaster.intersectObjects(
-        [...this.records.values()].map((record) => record.mesh),
-        false,
-      )[0] || null
-    );
+    return this.raycaster.intersectObjects(this.group.children, false)[0] || null;
   }
   placementHit(ray) {
     const hit = this.surfaceHit(ray);
@@ -295,11 +276,18 @@ export class SpatialWorld {
     return true;
   }
   notify() {
-    const text = JSON.stringify(this.state);
-    if (text !== this.lastState) {
-      this.lastState = text;
-      this.onChange({ ...this.state });
-    }
+    const previous = this.lastState;
+    const { anchor, occlusion, planes, meshes } = this.state;
+    if (
+      previous &&
+      previous.anchor === anchor &&
+      previous.occlusion === occlusion &&
+      previous.planes === planes &&
+      previous.meshes === meshes
+    )
+      return;
+    this.lastState = { ...this.state };
+    this.onChange({ ...this.state });
   }
   dispose() {
     this.stop();

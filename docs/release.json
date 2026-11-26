@@ -1,6 +1,6 @@
 {
-  "version": "0.3.0",
-  "builtAt": "2026-11-26T15:40:12.014Z",
+  "version": "0.4.0",
+  "builtAt": "2026-11-26T18:15:38.189Z",
   "models": {
     "horse": {
       "file": "models/horse-v2.glb",

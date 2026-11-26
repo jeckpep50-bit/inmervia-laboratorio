@@ -19,9 +19,7 @@ export function createAssetStore(prepare) {
   };
 }
 
-export function boundedScale(value) {
-  return Number.isFinite(value) ? Math.min(1.2, Math.max(0.2, value)) : 0.6;
-}
+export const MR_SCALE = 1.2;
 
 // A failed renderer setup must not leave an immersive session running.
 export async function startImmersiveSession(xr, manager) {

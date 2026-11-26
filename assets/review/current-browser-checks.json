@@ -1,5 +1,5 @@
 {
-  "url": "http://127.0.0.1:55455/",
+  "url": "http://127.0.0.1:61930/",
   "pass": true,
   "checks": [
     "Aplicación responde HTTP 200",
@@ -19,7 +19,7 @@
     "cow: arrastre real",
     "cow: restauración",
     "Entradas inválidas no corrompen el estado",
-    "Límites de escala",
+    "Sin lista de regiones ni controles de escala",
     "Referencia visual",
     "Móvil sin desbordamiento horizontal",
     "El panel móvil deja libre el visor",

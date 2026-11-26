@@ -4,8 +4,8 @@ import { DragControls } from 'three/addons/controls/DragControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-import { ZONES, ANIMALS, JOINTS } from './zones.js?v=0.3.0';
-import { createAssetStore, boundedScale, startImmersiveSession } from './runtime.js?v=0.3.0';
+import { ZONES, ANIMALS, JOINTS } from './zones.js?v=0.4.0';
+import { createAssetStore, MR_SCALE, startImmersiveSession } from './runtime.js?v=0.4.0';
 import {
   collectRegions,
   outlineFor,
@@ -14,11 +14,11 @@ import {
   isClosure,
   filterHiddenMaterials,
   breathe,
-} from './model-tools.js?v=0.3.0';
-import { LessonSession } from './lesson.js?v=0.3.0';
-import { SensoryFeedback } from './sensory.js?v=0.3.0';
-import { SpatialWorld } from './xr-world.js?v=0.3.0';
-import { paintXRPanel } from './xr-panel.js?v=0.3.0';
+} from './model-tools.js?v=0.4.0';
+import { pulse } from './sensory.js?v=0.4.0';
+import { AnimalGesture, RegionNames } from './interactions.js?v=0.4.0';
+import { SpatialWorld } from './xr-world.js?v=0.4.0';
+import { paintXRPanel } from './xr-panel.js?v=0.4.0';
 
 const $ = (id) => document.getElementById(id);
 const viewer = $('viewer');
@@ -76,13 +76,7 @@ ground.add(grid);
 const actor = new THREE.Group();
 actor.rotation.y = 0.35;
 scene.add(actor);
-const sensory = new SensoryFeedback(scene, camera);
-const spatial = new SpatialWorld(scene, actor, renderer, {
-  onChange: (state) => {
-    if ($('spatial-state')) $('spatial-state').textContent = state.anchor + ' · ' + state.occlusion;
-    drawXRPanel();
-  },
-});
+const spatial = new SpatialWorld(scene, actor, renderer, { onChange: () => drawXRPanel() });
 const floorShadow = new THREE.Mesh(
   new THREE.PlaneGeometry(8, 8),
   new THREE.ShadowMaterial({ opacity: 0.2, depthWrite: false }),
@@ -91,19 +85,15 @@ floorShadow.rotation.x = -Math.PI / 2;
 floorShadow.receiveShadow = true;
 floorShadow.position.y = 0.003;
 scene.add(floorShadow);
-const lessons = new Map();
-let lesson = null,
-  lessonStage = null,
-  hovered = null,
+let hovered = null,
   guidesVisible = true,
   xrTab = 'explore',
   lastHoverTime = 0;
-let practiceStorage = null,
-  noticeText = '',
+let noticeText = '',
   activeHand = null;
-try {
-  practiceStorage = window.localStorage;
-} catch {}
+const gesture = new AnimalGesture();
+const regionNames = new RegionNames(ZONES);
+scene.add(regionNames.group);
 const loader = new GLTFLoader(),
   raycaster = new THREE.Raycaster(),
   pointer = new THREE.Vector2();
@@ -124,7 +114,6 @@ let loadSequence = 0,
 let xrSupported = false,
   xrStarting = false,
   placementPending = false;
-const visited = { horse: new Set(), cow: new Set() };
 const labelEls = ZONES.map((z) => {
   const el = document.createElement('div');
   el.className = 'region-label';
@@ -151,14 +140,6 @@ function toast(text) {
 }
 let defaultStatus = '';
 
-ZONES.forEach((z, i) => {
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.dataset.region = z.id;
-  b.innerHTML = `<span>${String(i + 1).padStart(2, '0')}</span>${z.name}`;
-  b.addEventListener('click', () => select(z.id, { assisted: true }));
-  $('regions').append(b);
-});
 JOINTS.forEach((j, i) => {
   const o = document.createElement('option');
   o.value = i;
@@ -174,21 +155,15 @@ function materials(o) {
 function regionText(zone) {
   return animal === 'cow' && zone?.cowText ? zone.cowText : zone?.text;
 }
-function select(id, { assisted = false, userInitiated = true, controller = null } = {}) {
+function select(id, { userInitiated = true, controller = null } = {}) {
   const z = ZONES.find((z) => z.id === id),
     i = ZONES.indexOf(z);
   if (!current || !z) return;
   selected = id;
-  visited[animal].add(id);
   $('region-number').textContent = `REGIÓN ${String(i + 1).padStart(2, '0')} / 10`;
   $('region-name').textContent = z.name;
   $('region-text').textContent = regionText(z);
   $('challenge').textContent = z.prompt;
-  $('visited').textContent = `${visited[animal].size} / 10`;
-  document.querySelectorAll('[data-region]').forEach((b) => {
-    b.classList.toggle('active', b.dataset.region === id);
-    b.classList.toggle('visited', visited[animal].has(b.dataset.region));
-  });
   [...current.parts, ...current.pieces].forEach((o) =>
     materials(o).forEach((m) => {
       m.emissive?.set(o.userData.region === id ? 0x237b82 : 0x000000);
@@ -197,11 +172,7 @@ function select(id, { assisted = false, userInitiated = true, controller = null 
   );
   updateHighlights();
   updateGuides();
-  if (userInitiated) {
-    sensory.play('select', regionWorldPosition(id), controller);
-    const result = lesson?.select(id, { assisted });
-    if (result !== null && result !== undefined) syncLesson();
-  }
+  if (userInitiated) pulse(controller, 0.18, 25);
   drawXRPanel();
 }
 function regionWorldPosition(id) {
@@ -227,7 +198,7 @@ function updateGuides() {
     const piece = current.pieces.find((p) => p.userData.region === guide.userData.region);
     guide.visible =
       mode === 'assemble' &&
-      guidesVisible &&
+      (renderer.xr.isPresenting || guidesVisible) &&
       guide.userData.region === selected &&
       !piece.userData.snapped;
   }
@@ -245,15 +216,16 @@ function snapPreview(piece) {
   const guide = current.guides?.children.find((g) => g.userData.region === piece.userData.region);
   if (guide)
     for (const material of materials(guide)) material.color.set(ready ? 0x52ba81 : 0x31bcc4);
-  if ($('snap-status'))
-    $('snap-status').textContent = ready
-      ? 'Suelta para encajar.'
-      : near
-        ? 'La posición coincide. Ajusta el giro de la pieza.'
-        : 'Acerca la pieza a su silueta para encajar.';
+  const hint = ready
+    ? 'Suelta para encajar.'
+    : near
+      ? 'La posición coincide. Ajusta el giro de la pieza.'
+      : 'Acerca la pieza a su silueta para encajar.';
+  const output = $('snap-status');
+  if (output.textContent !== hint) output.textContent = hint;
   if (ready && !piece.userData.wasReady) {
     const controller = controllers.find((c) => c.userData.held === piece);
-    sensory.pulse(controller, 0.18, 25);
+    pulse(controller, 0.18, 25);
   }
   piece.userData.wasReady = ready;
 }
@@ -440,6 +412,14 @@ async function prepareAnimal(id) {
       return { bone, rest: bone.quaternion.clone(), axis, angle: 0 };
     });
     return {
+      tongue:
+        id === 'cow'
+          ? gesture.makeTongue(
+              parts.find((p) => p.userData.region === 'head'),
+              joints[1].bone,
+              actor,
+            )
+          : null,
       root,
       parts,
       pieces,
@@ -470,6 +450,7 @@ function updateXRButton() {
 async function loadAnimal(id) {
   if (!Object.hasOwn(ANIMALS, id)) return false;
   const ticket = ++loadSequence;
+  gesture.stop();
   releaseAll();
   loading = true;
   showLoading(id);
@@ -483,10 +464,9 @@ async function loadAnimal(id) {
       current.assembly.visible = false;
     }
     current = datum;
+    failedAnimal = null;
+    if (renderer.xr.isPresenting) xrTab = 'explore';
     animal = id;
-    if (!lessons.has(id)) lessons.set(id, new LessonSession(id, practiceStorage));
-    lesson = lessons.get(id);
-    lessonStage = null;
     selected = null;
     restorePieces(false);
     setMode('explore');
@@ -497,7 +477,6 @@ async function loadAnimal(id) {
       .forEach((b) => b.classList.toggle('active', b.dataset.animal === id));
     $('reference').hidden = id !== 'horse';
     select('head', { userInitiated: false });
-    syncLesson();
     if (!renderer.xr.isPresenting) resetView();
     updateDrag();
     $('load-state').hidden = true;
@@ -522,7 +501,6 @@ async function loadAnimal(id) {
     if (ticket === loadSequence) {
       loading = false;
       updateXRButton();
-      renderLesson();
       drawXRPanel();
     }
   }
@@ -530,6 +508,7 @@ async function loadAnimal(id) {
 function setMode(next) {
   if (!current || !['explore', 'assemble'].includes(next)) return;
   releaseAll();
+  gesture.stop();
   mode = next;
   resetPose();
   current.root.visible = next === 'explore';
@@ -579,6 +558,7 @@ function refreshBounds() {
 }
 function resetPose() {
   if (!current) return;
+  if (!current.joints.some((j) => j.angle !== 0)) return;
   current.joints.forEach((j) => {
     j.bone.quaternion.copy(j.rest);
     j.angle = 0;
@@ -613,13 +593,9 @@ function restorePieces(message = true) {
     p.userData.snapped = true;
   });
   updateCount();
-  if (message && lesson?.view.active && lesson.view.stage === 'assemble') {
-    for (const id of [...lesson.view.remaining]) lesson.assemble(id, { assisted: true });
-    syncLesson();
-  }
   if (message) toast('Las diez piezas vuelven a su posición inicial.');
 }
-function explode(ids = null) {
+function explode() {
   if (!current) return;
   if (mode !== 'assemble') setMode('assemble');
   releaseAll();
@@ -633,24 +609,16 @@ function explode(ids = null) {
     .applyQuaternion(view.getWorldQuaternion(new THREE.Quaternion()))
     .transformDirection(inv);
   current.pieces.forEach((p) => {
-    if (ids && !ids.includes(p.userData.region)) return;
     const i = ZONES.findIndex((z) => z.id === p.userData.region),
       a = (i * Math.PI * 2) / 10;
     const dir = right.clone().multiplyScalar(Math.cos(a)).addScaledVector(up, Math.sin(a));
-    const lessonOffsets = { head: [0.88, 0.1], fore_left: [-0.9, -0.2], hind_right: [-1.15, 0.25] };
-    const offset = ids && lessonOffsets[p.userData.region];
-    if (offset)
-      p.position
-        .copy(p.userData.home)
-        .addScaledVector(right, offset[0])
-        .addScaledVector(up, offset[1]);
-    else p.position.copy(p.userData.home).addScaledVector(dir, 0.72 + (i % 3) * 0.08);
+    p.position.copy(p.userData.home).addScaledVector(dir, 0.72 + (i % 3) * 0.08);
     p.quaternion.identity();
     p.userData.snapped = false;
   });
   updateCount();
 }
-function trySnap(p, assisted = false, record = true, controller = null) {
+function trySnap(p, record = true, controller = null) {
   const close = p.position.distanceTo(p.userData.home) < 0.2,
     aligned = p.quaternion.angleTo(p.userData.homeQuaternion) < THREE.MathUtils.degToRad(28);
   if (close && aligned) {
@@ -658,11 +626,7 @@ function trySnap(p, assisted = false, record = true, controller = null) {
     p.quaternion.copy(p.userData.homeQuaternion);
     p.userData.snapped = true;
     toast('Pieza colocada: ' + ZONES.find((z) => z.id === p.userData.region).name);
-    if (record) {
-      sensory.play('snap', p.getWorldPosition(new THREE.Vector3()), controller);
-      const result = lesson?.assemble(p.userData.region, { assisted });
-      if (result) syncLesson();
-    }
+    if (record) pulse(controller, 0.4, 65);
   } else p.userData.snapped = false;
   updateCount();
   return p.userData.snapped;
@@ -701,97 +665,9 @@ function resetView() {
   actor.scale.setScalar(1);
   controls.update();
 }
-function renderLesson() {
-  if (!lesson) return;
-  const view = lesson.view;
-  $('lesson-title').textContent =
-    view.active || view.stage === 'done' ? view.title : 'Observa, reconstruye y explica';
-  $('lesson-instruction').textContent =
-    view.active || view.stage === 'done'
-      ? view.instruction
-      : 'Reconoce siete regiones, reconstruye tres piezas y responde cinco preguntas.';
-  $('lesson-progress').value = view.progress;
-  $('lesson-feedback').textContent = view.feedback;
-  $('lesson-feedback').hidden = !view.active && view.stage !== 'done';
-  $('lesson-start').hidden = view.active;
-  $('lesson-start').disabled = !current || loading;
-  $('lesson-start').textContent =
-    view.stage === 'done' ? 'Nuevo recorrido' : view.progress ? 'Continuar' : 'Comenzar';
-  $('lesson-next').hidden = view.stage !== 'quiz' || !view.answered;
-  $('lesson-help').hidden = !view.active || !['explore', 'orient', 'assemble'].includes(view.stage);
-  $('lesson-score').textContent = 'Mi práctica · ' + view.score + '/100 puntos';
-  $('lesson-result').textContent =
-    view.mistakes +
-    ' intentos para repasar · ' +
-    view.assisted +
-    ' acciones con ayuda. El progreso se guarda solo en este navegador, sin nombres ni envío a un servidor.';
-  $('lesson-choices').replaceChildren();
-  if (view.active && view.question)
-    view.question.options.forEach((text, index) => {
-      const button = document.createElement('button');
-      button.textContent = String.fromCharCode(65 + index) + '. ' + text;
-      button.dataset.answer = index;
-      button.disabled = view.answered;
-      button.addEventListener('click', () => answerLesson(index));
-      $('lesson-choices').append(button);
-    });
-}
-function syncLesson() {
-  if (!lesson) return;
-  const view = lesson.view,
-    changed = lessonStage !== view.stage;
-  lessonStage = view.stage;
-  if (view.active && changed) {
-    if (view.stage === 'assemble') {
-      setMode('assemble');
-      restorePieces(false);
-      explode(view.remaining);
-    } else setMode('explore');
-  }
-  renderLesson();
-  drawXRPanel();
-}
-function startLesson() {
-  if (!lesson) return;
-  sensory.unlock();
-  lesson.start();
-  lessonStage = null;
-  syncLesson();
-}
-function answerLesson(index) {
-  const correct = lesson?.answer(index);
-  if (correct !== null && correct !== undefined) {
-    sensory.play(correct ? 'snap' : 'wrong', actor.position);
-    syncLesson();
-  }
-}
-function helpLesson() {
-  if (!lesson) return;
-  if (lesson.view.stage === 'assemble') {
-    const id = lesson.view.remaining[0],
-      piece = current.pieces.find((p) => p.userData.region === id);
-    if (piece) {
-      releaseAll();
-      select(id, { userInitiated: false });
-      piece.position.copy(piece.userData.home);
-      piece.quaternion.copy(piece.userData.homeQuaternion);
-      trySnap(piece, true);
-    }
-  } else {
-    const id = lesson.expected();
-    if (id) select(id, { assisted: true });
-  }
-}
-function speakCurrent() {
-  const text = lesson?.view.active
-    ? lesson.view.title + '. ' + lesson.view.instruction
-    : regionText(ZONES.find((z) => z.id === selected)) || 'Selecciona una región del animal.';
-  if (!sensory.speak(text))
-    toast('La voz no está disponible en este navegador. La explicación permanece en pantalla.');
-}
 function focusRegion() {
   if (renderer.xr.isPresenting) {
-    toast('Ajusta el tamaño desde el panel para observar la región.');
+    toast('Acércate al animal para observar la región.');
     return;
   }
   if (!current || !selected) return;
@@ -822,36 +698,6 @@ function toggleGuides() {
   updateGuides();
   drawXRPanel();
 }
-function toggleSound() {
-  const enabled = sensory.toggle();
-  $('toggle-sound').textContent = enabled ? 'Sonido activado' : 'Sonido desactivado';
-  $('toggle-sound').setAttribute('aria-pressed', String(enabled));
-  drawXRPanel();
-}
-$('lesson-start').addEventListener('click', startLesson);
-$('lesson-next').addEventListener('click', () => {
-  lesson?.next();
-  syncLesson();
-});
-$('lesson-help').addEventListener('click', helpLesson);
-$('lesson-reset').addEventListener('click', () => {
-  lesson?.reset();
-  lessonStage = null;
-  syncLesson();
-});
-$('lesson-export').addEventListener('click', () => {
-  if (!lesson) return;
-  const url = URL.createObjectURL(
-    new Blob([JSON.stringify(lesson.result(), null, 2)], { type: 'application/json' }),
-  );
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = 'inmervia-practica-' + animal + '.json';
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-});
-$('read-region').addEventListener('click', speakCurrent);
-$('toggle-sound').addEventListener('click', toggleSound);
 $('focus-region').addEventListener('click', focusRegion);
 $('toggle-guides').addEventListener('click', toggleGuides);
 $('rotate-axis').addEventListener('click', () => {
@@ -863,23 +709,6 @@ viewer.addEventListener('keydown', (event) => {
     event.preventDefault();
     rotateSelected(rotationAxis, event.shiftKey ? -15 : 15);
   }
-});
-$('place-room').addEventListener('click', () => {
-  if (!renderer.xr.isPresenting) return;
-  const placing = spatial.togglePlacement();
-  toast(
-    placing
-      ? 'Apunta al suelo o a una superficie horizontal y pulsa el gatillo.'
-      : 'Colocación cancelada.',
-  );
-  drawXRPanel();
-});
-$('anchor-room').addEventListener('click', () => spatial.requestAnchor());
-$('clear-anchor-room').addEventListener('click', () => spatial.clearAnchor());
-$('capture-room').addEventListener('click', async () => toast(await spatial.captureRoom()));
-$('occlusion-toggle').addEventListener('change', (event) => {
-  spatial.setOcclusion(event.target.checked);
-  drawXRPanel();
 });
 document
   .querySelectorAll('[data-animal]')
@@ -919,10 +748,13 @@ $('fit-piece').addEventListener('click', () => {
   }
 });
 $('reset-view').addEventListener('click', resetView);
-$('labels').addEventListener('click', () => {
+function toggleNames() {
   labelsVisible = !labelsVisible;
   $('labels').textContent = labelsVisible ? 'Ocultar nombres' : 'Mostrar nombres';
-});
+  $('labels').setAttribute('aria-pressed', String(labelsVisible));
+  drawXRPanel();
+}
+$('labels').addEventListener('click', toggleNames);
 $('help').addEventListener('click', () => $('help-dialog').showModal());
 $('reference').addEventListener('click', () => $('reference-dialog').showModal());
 document
@@ -966,32 +798,11 @@ const panel = new THREE.Mesh(
 panel.visible = false;
 scene.add(panel);
 let panelButtons = [];
-function wrapText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 4) {
-  let line = '',
-    row = 0;
-  for (const word of text.split(' ')) {
-    const test = line + word + ' ';
-    if (ctx.measureText(test).width > maxWidth && line) {
-      ctx.fillText(line.trim(), x, y + row * lineHeight);
-      row++;
-      line = '';
-      if (row >= maxLines) return;
-    }
-    line += word + ' ';
-  }
-  if (row < maxLines) ctx.fillText(line.trim(), x, y + row * lineHeight);
-}
-function scaleActor(factor) {
-  if (Number.isFinite(factor) && factor > 0)
-    actor.scale.setScalar(boundedScale(actor.scale.x * factor));
-}
 function drawXRPanel() {
-  if (!panelCanvas.getContext('2d')) return;
-  const zone = ZONES.find((zone) => zone.id === selected),
-    practice = lesson?.view;
+  if (!panel.visible) return;
+  const zone = ZONES.find((z) => z.id === selected);
   const exit = ['Salir de MR', () => renderer.xr.getSession()?.end()];
-  const articulation = (direction) =>
-    setPose((current?.joints[jointIndex].angle || 0) + direction * 5);
+  const names = [labelsVisible ? 'Ocultar nombres' : 'Mostrar nombres', toggleNames];
   let actions,
     heading = zone?.name || 'Selecciona una región',
     body = regionText(zone) || 'Apunta al animal y pulsa el gatillo.';
@@ -1002,7 +813,7 @@ function drawXRPanel() {
       : mode === 'assemble'
         ? current?.pieces.filter((piece) => piece.userData.snapped).length +
           ' / 10 piezas en su sitio'
-        : JOINTS[jointIndex].label + ': ' + (current?.joints[jointIndex]?.angle || 0) + '°';
+        : 'Apunta a una región y pulsa el gatillo.';
   if (xrTab === 'space') {
     heading = 'Tu aula, tu laboratorio';
     body =
@@ -1019,81 +830,24 @@ function drawXRPanel() {
       : 'La posición se fija solo si el visor entrega un ancla.';
     actions = [
       [
-        'Colocar en superficie',
+        spatial.placing ? 'Cancelar colocación' : 'Colocar en superficie',
         () => {
-          $('place-room').click();
+          spatial.togglePlacement();
+          drawXRPanel();
         },
       ],
       ['Fijar posición', () => spatial.requestAnchor()],
       ['Soltar ancla', () => spatial.clearAnchor()],
-      ['Configurar habitación', async () => toast(await spatial.captureRoom())],
       [
         spatial.enabled ? 'Oclusión: activada' : 'Oclusión: desactivada',
         () => {
           spatial.setOcclusion(!spatial.enabled);
-          $('occlusion-toggle').checked = spatial.enabled;
           drawXRPanel();
         },
       ],
       ['Reubicar delante', placeInRoom],
-      ['Más pequeño', () => scaleActor(0.85)],
-      ['Más grande', () => scaleActor(1.15)],
-      ['Sonido: ' + (sensory.enabled ? 'sí' : 'no'), toggleSound],
       exit,
     ];
-  } else if (xrTab === 'lesson') {
-    heading = practice?.title || 'Ruta de aprendizaje';
-    body = practice?.active
-      ? practice.instruction
-      : 'Reconoce regiones, orienta los lados y reconstruye tres piezas. Después responde cinco preguntas.';
-    statusText = practice?.active
-      ? practice.progress + '% · ' + practice.score + '/100 · ' + practice.feedback
-      : practice?.stage === 'done'
-        ? practice.score + '/100 puntos · Recorrido completado'
-        : 'Práctica formativa sin datos personales.';
-    actions = [
-      ...(!practice?.active ? [['Comenzar recorrido', startLesson]] : []),
-      ...(practice?.active && ['explore', 'orient', 'assemble'].includes(practice.stage)
-        ? [['Ver con ayuda', helpLesson]]
-        : []),
-      ['Escuchar instrucción', speakCurrent],
-      ...(practice?.stage === 'quiz' && practice.answered
-        ? [
-            [
-              'Siguiente pregunta',
-              () => {
-                lesson.next();
-                syncLesson();
-              },
-            ],
-          ]
-        : []),
-      [
-        'Reiniciar ruta',
-        () => {
-          lesson?.reset();
-          lessonStage = null;
-          syncLesson();
-        },
-      ],
-      [
-        'Explorar animal',
-        () => {
-          xrTab = 'explore';
-          setMode('explore');
-        },
-      ],
-    ];
-    if (practice?.active && practice.question) {
-      body = practice.answered ? practice.feedback : practice.question.question;
-      if (practice.answered)
-        statusText = practice.score + '/100 puntos · Pulsa «Siguiente pregunta».';
-      if (!practice.answered)
-        practice.question.options.forEach((text, index) =>
-          actions.push([String.fromCharCode(65 + index) + '. ' + text, () => answerLesson(index)]),
-        );
-    }
-    actions.push(['Sonido: ' + (sensory.enabled ? 'sí' : 'no'), toggleSound], exit);
   } else if (xrTab === 'assemble') {
     heading = zone?.name || 'Montar piezas';
     body = selected
@@ -1102,42 +856,24 @@ function drawXRPanel() {
     actions = [
       ['Separar piezas', () => explode()],
       ['Rearmar todo', () => restorePieces()],
-      ['Región anterior', () => cycleRegion(-1)],
-      ['Región siguiente', () => cycleRegion(1)],
       ['Girar en X', () => rotateSelected('x')],
       ['Girar en Y', () => rotateSelected('y')],
       ['Girar en Z', () => rotateSelected('z')],
       ['Encajar con ayuda', () => $('fit-piece').click()],
-      [guidesVisible ? 'Guía: activada' : 'Guía: desactivada', toggleGuides],
-      ['Escuchar explicación', speakCurrent],
-      ['Sonido: ' + (sensory.enabled ? 'sí' : 'no'), toggleSound],
+      names,
       exit,
     ];
   } else {
     actions = [
       ['Caballo', () => loadAnimal('horse')],
       ['Vaca', () => loadAnimal('cow')],
-      ['Región anterior', () => cycleRegion(-1)],
-      ['Región siguiente', () => cycleRegion(1)],
-      ['Movimiento −', () => articulation(-1)],
-      ['Movimiento +', () => articulation(1)],
       [
-        'Otra articulación',
+        animal === 'horse' ? 'Ver salto' : 'Ver lamida',
         () => {
-          jointIndex = (jointIndex + 1) % JOINTS.length;
-          $('joint').value = jointIndex;
-          drawXRPanel();
+          if (!loading) gesture.start(current, animal);
         },
       ],
-      [
-        'Restablecer postura',
-        () => {
-          resetPose();
-          drawXRPanel();
-        },
-      ],
-      ['Escuchar explicación', speakCurrent],
-      ['Sonido: ' + (sensory.enabled ? 'sí' : 'no'), toggleSound],
+      names,
       ['Reubicar animal', placeInRoom],
       exit,
     ];
@@ -1145,7 +881,6 @@ function drawXRPanel() {
   const tabs = [
     ['explore', 'Explorar'],
     ['assemble', 'Montar'],
-    ['lesson', 'Aprender'],
     ['space', 'Aula MR'],
   ].map(([id, label]) => ({
     label,
@@ -1165,11 +900,9 @@ function drawXRPanel() {
         'Anatomía externa · ' +
         (xrTab === 'space'
           ? 'Integración con el aula'
-          : xrTab === 'lesson'
-            ? 'Ruta guiada'
-            : mode === 'assemble'
-              ? 'Montar piezas'
-              : 'Explorar'),
+          : mode === 'assemble'
+            ? 'Montar piezas'
+            : 'Explorar'),
       heading,
       body,
       status: noticeText || statusText,
@@ -1178,10 +911,6 @@ function drawXRPanel() {
     tabs,
   );
   panelTexture.needsUpdate = true;
-}
-function cycleRegion(delta) {
-  const i = ZONES.findIndex((z) => z.id === selected);
-  select(ZONES[(i + delta + ZONES.length) % ZONES.length].id, { assisted: true });
 }
 const controllers = [];
 for (let i = 0; i < 2; i++) {
@@ -1210,16 +939,15 @@ for (let i = 0; i < 2; i++) {
   });
   c.addEventListener('selectstart', () => {
     activeHand = c;
-    sensory.unlock();
     const hit = xrHit(c, true);
     if (hit?.object === panel) {
       const x = hit.uv.x * 1024,
         y = (1 - hit.uv.y) * 1190;
       panelButtons.find((b) => x >= b.x && x <= b.x + b.w && y >= b.y && y <= b.y + b.h)?.action();
-      sensory.pulse(c, 0.14, 22);
+      pulse(c, 0.14, 22);
     } else if (spatial.placing) {
       if (spatial.place(raycaster.ray)) {
-        sensory.play('snap', actor.position, c);
+        pulse(c, 0.4, 65);
         toast('Animal colocado. Se está solicitando el ancla.');
       } else toast('Apunta a una superficie horizontal detectada por el visor.');
     } else if (hit && current && !loading) select(hit.object.userData.region, { controller: c });
@@ -1247,7 +975,7 @@ function xrHit(c, withPanel) {
   const m = new THREE.Matrix4().extractRotation(c.matrixWorld);
   raycaster.ray.origin.setFromMatrixPosition(c.matrixWorld);
   raycaster.ray.direction.set(0, 0, -1).applyMatrix4(m);
-  const candidates = meshes().filter((mesh) => {
+  const candidates = (gesture.active ? [] : meshes()).filter((mesh) => {
     const bounds = mesh.isSkinnedMesh ? mesh.boundingBox : mesh.geometry.boundingBox;
     if (!bounds) return true;
     const box = bounds.clone().applyMatrix4(mesh.matrixWorld);
@@ -1270,7 +998,7 @@ function release(c, record = true) {
   delete c.userData.held;
   if (current) {
     current.assembly.attach(p);
-    trySnap(p, false, record, c);
+    trySnap(p, record, c);
   }
 }
 function releaseAll() {
@@ -1310,25 +1038,27 @@ renderer.xr.addEventListener('sessionstart', () => {
   if (drag) drag.enabled = false;
   ground.visible = false;
   panel.visible = true;
+  for (const el of labelEls) el.hidden = true;
   document.body.classList.add('xr-active');
-  actor.scale.setScalar(1);
+  actor.scale.setScalar(MR_SCALE);
+  xrTab = mode;
+  updateGuides();
   spatial.start(renderer.xr.getSession());
-  for (const id of ['place-room', 'anchor-room', 'clear-anchor-room', 'capture-room'])
-    $(id).disabled = false;
   placementPending = true;
   updateXRButton();
 });
 renderer.xr.addEventListener('sessionend', () => {
   placementPending = false;
+  gesture.stop();
+  regionNames.group.visible = false;
   releaseAll();
   spatial.stop();
   hovered = null;
   updateHighlights();
-  for (const id of ['place-room', 'anchor-room', 'clear-anchor-room', 'capture-room'])
-    $(id).disabled = true;
   panel.visible = false;
   ground.visible = true;
   document.body.classList.remove('xr-active');
+  updateGuides();
   if (savedDesktop) {
     camera.position.copy(savedDesktop.position);
     camera.quaternion.copy(savedDesktop.quaternion);
@@ -1351,7 +1081,6 @@ $('enter-mr').addEventListener('click', async () => {
     return;
   }
   xrStarting = true;
-  sensory.unlock();
   updateXRButton();
   try {
     await startImmersiveSession(navigator.xr, renderer.xr);
@@ -1387,7 +1116,7 @@ async function checkXR() {
 }
 function xrDiagnostic(error) {
   return {
-    version: '0.3.0',
+    version: '0.4.0',
     url: location.href,
     secureContext: isSecureContext,
     embedded: window.self !== window.top,
@@ -1441,6 +1170,13 @@ renderer.setAnimationLoop((time, frame) => {
     }
   }
   if (!renderer.xr.isPresenting) controls.update();
+  gesture.update(time);
+  regionNames.update(
+    current,
+    actor,
+    mode,
+    labelsVisible && renderer.xr.isPresenting && !gesture.active,
+  );
   if (current && mode === 'explore')
     for (const part of current.parts) {
       breathe(part, (1 + Math.sin(time * 0.0016)) * 0.5);
@@ -1475,7 +1211,7 @@ renderer.setAnimationLoop((time, frame) => {
         if (hit && hit.object !== panel) next = hit.object.userData.region;
         const controllerRegion = hit && hit.object !== panel ? hit.object.userData.region : null;
         if (c.userData.hovered !== controllerRegion) {
-          sensory.pulse(c, 0.1, 18);
+          pulse(c, 0.1, 18);
           c.userData.hovered = controllerRegion;
         }
         if (spatial.placing && (c === activeHand || !activeHand)) spatial.preview(raycaster.ray);
@@ -1486,23 +1222,24 @@ renderer.setAnimationLoop((time, frame) => {
       }
     }
   }
-  labelEls.forEach((el, i) => {
-    el.hidden = !labelsVisible || renderer.xr.isPresenting || !current;
-    if (el.hidden) return;
-    const id = ZONES[i].id,
-      p =
-        mode === 'assemble'
-          ? current.pieces
-              .find((p) => p.userData.region === id)
-              .getWorldPosition(new THREE.Vector3())
-          : actor.localToWorld(current.centers.get(id).clone());
-    p.project(camera);
-    el.hidden = p.z < -1 || p.z > 1;
-    if (!el.hidden) {
-      el.style.left = (p.x * 0.5 + 0.5) * viewer.clientWidth + 'px';
-      el.style.top = (-p.y * 0.5 + 0.5) * viewer.clientHeight + 'px';
-    }
-  });
+  if (!renderer.xr.isPresenting)
+    labelEls.forEach((el, i) => {
+      el.hidden = !labelsVisible || renderer.xr.isPresenting || !current;
+      if (el.hidden) return;
+      const id = ZONES[i].id,
+        p =
+          mode === 'assemble'
+            ? current.pieces
+                .find((p) => p.userData.region === id)
+                .getWorldPosition(new THREE.Vector3())
+            : actor.localToWorld(current.centers.get(id).clone());
+      p.project(camera);
+      el.hidden = p.z < -1 || p.z > 1;
+      if (!el.hidden) {
+        el.style.left = (p.x * 0.5 + 0.5) * viewer.clientWidth + 'px';
+        el.style.top = (-p.y * 0.5 + 0.5) * viewer.clientHeight + 'px';
+      }
+    });
   renderer.render(scene, camera);
 });
 // Small observable interface for automated checks of model integrity and interaction state.
@@ -1543,10 +1280,6 @@ window.lab = {
   trySnap,
   resetPose,
   resetView,
-  scaleActor,
-  get lesson() {
-    return lesson;
-  },
   get spatial() {
     return spatial;
   },
@@ -1558,7 +1291,8 @@ window.addEventListener('pagehide', (event) => {
   if (event.persisted) return;
   clearTimeout(toastTimer);
   renderer.setAnimationLoop(null);
-  sensory.dispose();
+  gesture.stop();
+
   spatial.dispose();
   resizeObserver.disconnect();
   drag?.dispose();

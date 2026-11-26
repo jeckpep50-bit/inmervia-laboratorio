@@ -3,7 +3,7 @@
 Laboratorio de anatomía externa para secundaria con caballo y vaca, diez regiones
 seleccionables, once controles de articulación ilustrativa y montaje de piezas.
 
-**[Abrir la experiencia](https://jeckpep50-bit.github.io/inmervia-laboratorio/?v=0.3.0)**.
+**[Abrir la experiencia](https://jeckpep50-bit.github.io/inmervia-laboratorio/?v=0.4.0)**.
 
 ## Meta Quest 2 y Quest 3
 
@@ -15,8 +15,8 @@ el estado de WebXR y el error recibido. No pide datos personales.
 
 - Gatillo: seleccionar regiones y botones del panel.
 - Agarre: mover y girar una pieza en «Montar»; soltar cerca de su silueta para encajar.
-- B/Y: acercar el panel. Sus pestañas son Explorar, Montar, Aprender y Aula MR.
-- Aula MR: cambiar tamaño, reubicar, anclar durante la sesión y configurar el espacio.
+- B/Y: acercar el panel. Sus pestañas son Explorar, Montar y Aula MR.
+- Aula MR: colocar sobre una superficie, reubicar, anclar durante la sesión y activar la oclusión.
 
 El anclaje y la oclusión solicitan capacidades **opcionales**. La aplicación muestra
 el estado efectivo, incluidas las funciones ausentes. La oclusión utiliza planos
@@ -29,17 +29,9 @@ sobre el suelo de referencia de WebXR.
 La entrada, seguimiento, mandos, visibilidad de textos y fluidez requieren prueba
 física en Quest 2 y 3. Las comprobaciones de escritorio no certifican estas gafas.
 
-## Aprender y manipular
+## Explorar y montar
 
-La ruta guiada recorre cuatro etapas: reconocer tres regiones, identificar cuatro
-extremidades desde la perspectiva del animal, montar tres piezas y responder cinco
-preguntas. Explica los errores y diferencia las acciones realizadas con ayuda.
-La puntuación es formativa; no es una certificación de aprendizaje.
-
-El progreso queda en el navegador, por animal, sin nombres ni envío de resultados
-a un servidor. Se puede reiniciar o descargar un JSON. La narración depende de las
-voces del navegador. La selección y el encaje tienen señales visuales, sonido
-espacial sintetizado y vibración cuando el mando lo permite.
+En MR, el tamaño está fijado al máximo anterior (1,2×). Apunta al animal con el gatillo para identificar la región. «Mostrar nombres» activa rótulos en la escena de exploración y montaje. «Ver salto» y «Ver lamida» reproducen una animación breve según el animal. Los mandos compatibles vibran al seleccionar y encajar.
 
 Las piezas se pueden girar en tres ejes; la guía de encaje indica proximidad y
 orientación. Las once articulaciones son controles de animación, no valores de

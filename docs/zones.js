@@ -8,7 +8,7 @@ export const ZONES = [
   {
     id: 'neck',
     name: 'Cuello',
-    text: 'Región que une la cabeza con el tronco. En el modo articular puedes explorar un movimiento ilustrativo del cuello.',
+    text: 'Región que une la cabeza con el tronco. Observa cómo cambia su inclinación cuando el animal mueve la cabeza.',
     prompt: 'Observa cómo cambia la posición de la cabeza al mover el cuello.',
   },
   {

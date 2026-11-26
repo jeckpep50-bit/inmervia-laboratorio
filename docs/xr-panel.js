@@ -46,12 +46,12 @@ export function paintXRPanel(canvas, view, actions, tabs) {
     buttons.push({ x, y, w, h, action });
   }
   tabs.forEach((tab, index) =>
-    button(tab.label, tab.action, 25 + index * 248, 438, 230, 61, tab.active),
+    button(tab.label, tab.action, 25 + index * 326, 438, 310, 66, tab.active),
   );
   actions
     .slice(0, 14)
     .forEach(([label, action], index) =>
-      button(label, action, 30 + (index % 2) * 492, 520 + Math.floor(index / 2) * 78, 470, 64),
+      button(label, action, 30 + (index % 2) * 492, 535 + Math.floor(index / 2) * 99, 470, 83),
     );
   ctx.fillStyle = '#6b5b6b';
   ctx.font = '23px Arial';

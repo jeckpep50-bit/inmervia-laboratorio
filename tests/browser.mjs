@@ -46,7 +46,7 @@ try {
     await page.locator(`[data-animal="${id}"]`).click();
     await page.waitForFunction((id) => window.lab.ready && window.lab.animal === id, id);
     ok(id + ': diez regiones', await page.evaluate(() => window.lab.current.parts.length === 10));
-    await page.locator('[data-region="head"]').click();
+    await page.evaluate(() => window.lab.select('head'));
     ok(
       id + ': selección e información',
       await page.evaluate(
@@ -125,15 +125,8 @@ try {
       ),
   );
   ok(
-    'Límites de escala',
-    await page.evaluate(() => {
-      for (let i = 0; i < 100; i++) window.lab.scaleActor(1.15);
-      const upper = window.lab.actor.scale.x;
-      for (let i = 0; i < 100; i++) window.lab.scaleActor(0.85);
-      const lower = window.lab.actor.scale.x;
-      window.lab.resetView();
-      return upper === 1.2 && lower === 0.2;
-    }),
+    'Sin lista de regiones ni controles de escala',
+    (await page.locator('#regions,#scale-up,#scale-down').count()) === 0,
   );
   await page.locator('[data-animal="horse"]').click();
   await page.waitForFunction(() => window.lab.ready && window.lab.animal === 'horse');

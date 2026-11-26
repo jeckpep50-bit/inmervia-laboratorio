@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createAssetStore, boundedScale, startImmersiveSession } from '../docs/runtime.js';
+import { createAssetStore, MR_SCALE, startImmersiveSession } from '../docs/runtime.js';
 
 test('overlapping loads share work and the same prepared object', async () => {
   let calls = 0;
@@ -28,17 +28,7 @@ test('failed loads can be retried and do not affect another animal', async () =>
   assert.equal(await store.get('horse'), horse);
 });
 
-test('scale is bounded even after repeated resize commands', () => {
-  let large = 0.6,
-    small = 0.6;
-  for (let i = 0; i < 100; i++) {
-    large = boundedScale(large * 1.15);
-    small = boundedScale(small * 0.85);
-  }
-  assert.equal(large, 1.2);
-  assert.equal(small, 0.2);
-  assert.equal(boundedScale(NaN), 0.6);
-});
+test('MR uses the previous maximum size', () => assert.equal(MR_SCALE, 1.2));
 
 test('MR requests the floor reference space actually used by the renderer', async () => {
   let request;

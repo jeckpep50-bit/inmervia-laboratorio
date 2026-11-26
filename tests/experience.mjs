@@ -88,6 +88,85 @@ try {
         landmarks.every((point) => point.region === 'thorax' && point.distance < 0.025),
       );
     }
+    const interactions = await page.evaluate(async (species) => {
+      const { AnimalGesture, RegionNames } = await import('./interactions.js?v=0.4.0');
+      const { ZONES } = await import('./zones.js?v=0.4.0');
+      const { current, actor, renderer, scene } = window.lab;
+      const gesture = new AnimalGesture();
+      const base = current.root.position.y;
+      gesture.start(current, species);
+      gesture.update(1000);
+      gesture.update(1580);
+      const moved =
+        species === 'horse'
+          ? current.root.position.y > base + 0.15
+          : current.tongue.visible && current.tongue.scale.z > 0.06;
+      gesture.update(3000);
+      const restored =
+        current.root.position.y === base &&
+        !current.tongue?.visible &&
+        current.joints.every((j) => j.bone.quaternion.angleTo(j.rest) < 0.001);
+      const names = new RegionNames(ZONES);
+      const head = current.pieces.find((p) => p.userData.region === 'head');
+      names.update(current, actor, 'assemble', true);
+      const before = names.tags[0].sprite.position.clone();
+      head.position.x += 0.25;
+      names.update(current, actor, 'assemble', true);
+      const follows = Math.abs(before.distanceTo(names.tags[0].sprite.position) - 0.25) < 0.001;
+      head.position.x -= 0.25;
+      names.update(current, actor, 'assemble', false);
+      for (const tag of names.tags) {
+        tag.sprite.material.map.dispose();
+        tag.sprite.material.dispose();
+        tag.line.geometry.dispose();
+        tag.line.material.dispose();
+      }
+      const texts = [];
+      const proto = CanvasRenderingContext2D.prototype,
+        fill = proto.fillText;
+      proto.fillText = function (...args) {
+        texts.push(args[0]);
+        return fill.apply(this, args);
+      };
+      try {
+        renderer.xr.dispatchEvent({ type: 'sessionstart' });
+        const panel = scene.children.find((o) => o.material?.map?.image?.height === 1190);
+        panel.position.set(10, 1, 0);
+        panel.updateMatrixWorld(true);
+        const c = renderer.xr.getController(0);
+        function click(x, y) {
+          c.position.set(10 + (x / 1024 - 0.5) * 0.84, 1 + (0.5 - y / 1190) * 0.976, 0.5);
+          c.quaternion.identity();
+          c.updateMatrix();
+          c.dispatchEvent({ type: 'selectstart' });
+        }
+        const explore =
+          texts.includes(species === 'horse' ? 'Ver salto' : 'Ver lamida') &&
+          texts.includes('Mostrar nombres') &&
+          !texts.includes('Aprender');
+        click(690, 670);
+        const toggles = texts.includes('Ocultar nombres');
+        click(690, 670);
+        texts.length = 0;
+        click(466, 473);
+        const assembly = texts.includes('Encajar con ayuda') && !texts.includes('Región siguiente');
+        texts.length = 0;
+        click(790, 473);
+        const room =
+          texts.includes('Colocar en superficie') &&
+          !texts.includes('Más grande') &&
+          actor.scale.x === 1.2;
+        c.position.set(0, 0, 0);
+        c.updateMatrix();
+        panel.position.set(0, 0, 0);
+        return { moved, restored, follows, explore, toggles, assembly, room };
+      } finally {
+        renderer.xr.dispatchEvent({ type: 'sessionend' });
+        proto.fillText = fill;
+        window.lab.setMode('explore');
+      }
+    }, id);
+    for (const [check, pass] of Object.entries(interactions)) ok(id + ' · ' + check, pass);
     for (let i = 0; i < 11; i++) {
       await page.locator('#joint').selectOption(String(i));
       await page.locator('#pose').fill('15');
@@ -125,20 +204,10 @@ try {
       for (const p of window.lab.current.parts)
         for (const m of Array.isArray(p.material) ? p.material : [p.material]) m.wireframe = false;
       window.lab.resetView();
-      window.lab.lesson.reset();
+      window.lab.setMode('assemble');
+      window.lab.explode();
+      window.lab.select('head');
     });
-    await page.locator('#lesson-start').click();
-    for (let i = 0; i < 7; i++) await page.locator('#lesson-help').click();
-    ok(
-      id + ': ruta pasa de reconocimiento a montaje',
-      await page.evaluate(
-        () =>
-          window.lab.lesson.view.stage === 'assemble' &&
-          window.lab.mode === 'assemble' &&
-          window.lab.current.pieces.filter((p) => !p.userData.snapped).length === 3,
-      ),
-    );
-    await page.locator('[data-region="head"]').click();
     ok(
       id + ': guía individual visible',
       await page.evaluate(
@@ -170,56 +239,7 @@ try {
       ),
     );
     await page.screenshot({ path: `assets/review/${id}-v2-assemble.png`, fullPage: true });
-    for (let i = 0; i < 3; i++) await page.locator('#lesson-help').click();
-    ok(
-      id + ': tres encajes activan evaluación',
-      await page.evaluate(
-        () => window.lab.lesson.view.stage === 'quiz' && window.lab.lesson.view.score === 29,
-      ),
-    );
-    for (const [question, answer] of [1, 1, 0, 2, 1].entries()) {
-      await page.locator(`[data-answer="${answer}"]`).click();
-      ok(
-        id + ': pregunta ' + question + ' explica la respuesta',
-        (await page.locator('#lesson-feedback').textContent()).includes(
-          question === 0 ? 'Repasemos.' : 'Correcto.',
-        ),
-      );
-      await page.locator('#lesson-next').click();
-    }
-    ok(
-      id + ': resultado distingue errores y ayudas',
-      await page.evaluate(() => {
-        const v = window.lab.lesson.view;
-        return (
-          v.stage === 'done' &&
-          v.score === 57 &&
-          v.mistakes === 1 &&
-          v.assisted === 10 &&
-          v.progress === 100
-        );
-      }),
-    );
-    await page.locator('.lesson-card details').evaluate((el) => (el.open = true));
-    const [download] = await Promise.all([
-      page.waitForEvent('download'),
-      page.locator('#lesson-export').click(),
-    ]);
-    const result = JSON.parse(await fs.readFile(await download.path(), 'utf8'));
-    ok(
-      id + ': descarga resultado anónimo',
-      result.completed === true && !('name' in result) && result.animal === id,
-    );
-    await page.reload();
-    await page.waitForFunction(() => window.lab?.ready);
-    await page.locator(`[data-animal="${id}"]`).click();
-    await page.waitForFunction((id) => window.lab.ready && window.lab.animal === id, id);
-    ok(
-      id + ': conserva progreso tras recargar',
-      await page.evaluate(
-        () => window.lab.lesson.view.stage === 'done' && window.lab.lesson.view.score === 57,
-      ),
-    );
+    await page.locator('#restore').click();
   }
   ok('Sin errores de ejecución', errors.length === 0);
 } catch (error) {

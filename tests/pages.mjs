@@ -67,7 +67,7 @@ try {
         () => window.lab.current.parts.length === 10 && window.lab.current.joints.length === 11,
       ),
     );
-    await page.locator('[data-region="head"]').click();
+    await page.evaluate(() => window.lab.select('head'));
     ok(
       id + ': selección e información',
       await page.evaluate(
@@ -93,20 +93,16 @@ try {
     );
     await page.locator('[data-mode="explore"]').click();
   }
-  await page.locator('#lesson-start').click();
-  await page.locator('#lesson-help').click();
   ok(
-    'Ruta educativa operativa en producción',
-    await page.evaluate(
-      () => window.lab.lesson.view.score === 2 && window.lab.lesson.expected() === 'neck',
-    ),
+    'Menú simplificado',
+    (await page.locator('#regions,#lesson-start,#toggle-sound,#place-room').count()) === 0,
   );
   const credits = await page.request.get(new URL('credits.html', base).href);
   ok(
     'Créditos de los modelos publicados',
     credits.status() === 200 && (await credits.text()).includes('Grab3D'),
   );
-  await page.screenshot({ path: path.join(output, 'pages-v0.3.png'), fullPage: true });
+  await page.screenshot({ path: path.join(output, 'pages-v0.4.png'), fullPage: true });
   ok('Sin errores de JavaScript ni recursos', errors.length === 0);
 } catch (error) {
   failures.push(error.stack || String(error));
