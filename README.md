@@ -1,56 +1,71 @@
 # INMERVIA · Laboratorio animal
 
-Prototipo educativo de anatomía externa para secundaria: un caballo y una vaca
-texturizados, diez regiones seleccionables por animal, información en español,
-cinco controles de movimiento ilustrativo y separación/montaje de superficies.
+Laboratorio de anatomía externa para secundaria con caballo y vaca, diez regiones
+seleccionables, once controles de articulación ilustrativa y montaje de piezas.
 
-## Abrir en computador
-
-Requiere Node.js. Ejecutar `npm start` y abrir http://127.0.0.1:4173.
-No hay dependencias que instalar: Three.js y los recursos están incluidos.
-También puede alojarse la carpeta `docs/` en un servidor HTTPS estático.
+**[Abrir la experiencia](https://jeckpep50-bit.github.io/inmervia-laboratorio/?v=0.3.0)**.
 
 ## Meta Quest 2 y Quest 3
 
-La aplicación implementa WebXR `immersive-ar`. Abrir una dirección HTTPS
-compatible en el navegador de las gafas y pulsar «Entrar en realidad mixta».
-El gatillo selecciona; el botón de agarre mueve las piezas en modo montaje.
-La interfaz XR permite cambiar animal, región, modo, postura, tamaño y ubicación.
-La colocación, el rendimiento y los mandos requieren prueba física en ambas gafas.
-La comprobación de escritorio no certifica el funcionamiento en las Quest.
+Abrir el enlace directamente en Meta Quest Browser, con HTTPS, y pulsar el botón
+**«Entrar en realidad mixta»**, situado encima del visor 3D. Una comprobación de
+compatibilidad negativa no oculta el botón ni impide solicitar el permiso.
+Si falla, «Comprobar mis gafas» muestra un diagnóstico copiable con la versión,
+el estado de WebXR y el error recibido. No pide datos personales.
 
-## Estado de alojamiento
+- Gatillo: seleccionar regiones y botones del panel.
+- Agarre: mover y girar una pieza en «Montar»; soltar cerca de su silueta para encajar.
+- B/Y: acercar el panel. Sus pestañas son Explorar, Montar, Aprender y Aula MR.
+- Aula MR: cambiar tamaño, reubicar, anclar durante la sesión y configurar el espacio.
 
-Repositorio público, publicado con autorización de su propietario.
-GitHub Pages está configurado desde `main`, carpeta `docs/`, con rutas relativas
-y `.nojekyll`.
+El anclaje y la oclusión solicitan capacidades **opcionales**. La aplicación muestra
+el estado efectivo, incluidas las funciones ausentes. La oclusión utiliza planos
+o mallas reales que exponga el navegador; necesita la habitación configurada y el
+permiso correspondiente. No supone que Quest 2 suministre profundidad dinámica,
+ni garantiza ocultación por personas en movimiento. El ancla no persiste entre
+sesiones. Si no hay superficies, sigue disponible la colocación frente al usuario
+sobre el suelo de referencia de WebXR.
 
-**[Abrir la experiencia](https://jeckpep50-bit.github.io/inmervia-laboratorio/)**.
-La web y sus recursos son accesibles en Internet sin iniciar sesión en ChatGPT.
-Las nuevas entregas de `main` se publican mediante GitHub Pages.
+La entrada, seguimiento, mandos, visibilidad de textos y fluidez requieren prueba
+física en Quest 2 y 3. Las comprobaciones de escritorio no certifican estas gafas.
 
-## Alcance y límites
+## Aprender y manipular
 
-Los modelos son ligeros y facetados; no son fotorrealistas ni reconstrucciones
-de las fotografías. La segmentación es superficial y aproximada. Las piezas
-tienen bordes abiertos: no son huesos, músculos u órganos independientes.
-El esqueleto digital es un rig de animación. Los movimientos no representan
-rangos fisiológicos normales. El contenido requiere revisión docente.
+La ruta guiada recorre cuatro etapas: reconocer tres regiones, identificar cuatro
+extremidades desde la perspectiva del animal, montar tres piezas y responder cinco
+preguntas. Explica los errores y diferencia las acciones realizadas con ayuda.
+La puntuación es formativa; no es una certificación de aprendizaje.
 
-La imagen C1 sirve como referencia visual. C2–C9 no se distribuyen.
-No hay sincronización multijugador ni registro de datos personales.
+El progreso queda en el navegador, por animal, sin nombres ni envío de resultados
+a un servidor. Se puede reiniciar o descargar un JSON. La narración depende de las
+voces del navegador. La selección y el encaje tienen señales visuales, sonido
+espacial sintetizado y vibración cuando el mando lo permite.
 
-## Archivos
+Las piezas se pueden girar en tres ejes; la guía de encaje indica proximidad y
+orientación. Las once articulaciones son controles de animación, no valores de
+movilidad fisiológica normal. No se simulan fuerzas ni tejidos.
 
-- `docs/`: aplicación web y recursos de ejecución, todos locales.
-- `server.mjs`: servidor de demostración local.
-- `assets/src/`: bases originales y proyectos Blender con texturas incorporadas.
-- `assets/spec.json`: alcance y presupuesto técnico del prototipo.
-- `assets/review/`: informes de comprobación de la versión de escritorio.
+## Modelos y límites
 
-## Validación
+La versión 0.3 utiliza bases CC0 de Grab3D, con texturas PBR de hasta 2048 px,
+geometría reducida, trece huesos y diez regiones por animal. El proveedor identifica
+su origen como asistido por IA. No son escaneos anatómicos validados.
+Los cierres de las piezas son neutros y didácticos; se ocultan al estar montadas.
+En la vaca se separan los tramos inferiores de las extremidades, con un corte
+transversal por debajo del vientre. La ubre permanece con el tronco.
+No representan órganos, huesos o músculos internos. Los cortes y contenidos
+requieren revisión docente. C1 es una referencia visual, no el origen de un escaneo.
 
-Comandos de desarrollo:
+La meta de 8/10 en realismo, manipulación y educación exige una rúbrica y prueba
+de usuario; no se considera alcanzada automáticamente por añadir funciones.
+La evaluación inicial de 4/10 se conserva como línea base en `AUDITORIA.md`.
+La aceptación de esta entrega se registra en `VALIDACION-MR.md`.
+
+## Abrir y desarrollar
+
+Requiere Node.js. `npm start` abre un servidor en http://127.0.0.1:4173 y funciona
+sin instalar dependencias. La carpeta `docs/` es autónoma y se aloja mediante
+GitHub Pages desde `main`; Three.js, el decodificador y los recursos son locales.
 
 ```sh
 npm ci
@@ -61,33 +76,21 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-`npm start` continúa funcionando sin instalar dependencias. Las dependencias son
-herramientas de desarrollo. Para usar un Chrome ya instalado en las pruebas,
-definir `TEST_BROWSER` con su ruta. `TEST_URL` permite comprobar una publicación
-HTTPS; sin esa variable, las pruebas abren su propio servidor local y lo cierran
-al terminar. Se utiliza un perfil temporal, sin datos del navegador del usuario.
+Las dependencias son herramientas de desarrollo. `TEST_BROWSER` permite usar un
+Chrome instalado y `TEST_URL` comprobar una publicación HTTPS. Sin `TEST_URL`,
+las pruebas abren y cierran su servidor local. Usan un perfil temporal aislado.
 
-La depuración incorpora carga compartida de modelos, recuperación de errores,
-límites de tamaño, inicio MR con referencia de suelo obligatoria y limpieza de
-recursos al cerrar la página. Las pruebas de sesión usan dobles de prueba y no
-sustituyen una prueba física de gafas. El informe de inmersión y las prioridades
-de mejora están en [AUDITORIA.md](AUDITORIA.md).
+`tools/build_animals.py` reproduce la adaptación en Blender 5.2 desde las bases
+originales indicadas en `LICENSES.md`. `assets/src/` contiene proyectos editables;
+`assets/spec.json` define sus presupuestos y `assets/review/` sus comprobaciones.
+Las QA distinguen la piel ensamblada de cada pieza aislada con su cierre.
+La geometría se comprime con Meshopt antes de distribuirla. Solo se representa
+un animal a la vez; el rendimiento real en el visor sigue pendiente.
 
-La versión de escritorio pasó 55 comprobaciones funcionales y su copia autónoma
-pasó otras 9 sin conexión, incluido arrastre real con puntero en ambos animales.
-Los informes conservan su alcance original: ninguna prueba física de gafas.
+Tras ejecutar `tools/build_animals.py`, `tools/optimize-models.mjs` recibe como
+argumento la ruta instalada de `@gltf-transform/cli` (CLI 4.3.0; SDK 4.5.1 en esta
+entrega). Normaliza tangentes, conserva la fuente en `assets/cache/` y comprime
+los GLB públicos. `tools/validate-models.mjs` necesita `gltf-validator` instalado
+o su ruta en `GLTF_VALIDATOR_MODULE`; comprueba ambas versiones del archivo.
 
-Los archivos glTF tienen cero errores y diez avisos `NODE_SKINNED_MESH_NON_ROOT`
-por modelo, derivados de la jerarquía exportada por Blender. La representación y
-articulación se comprobaron en Three.js. Esa jerarquía puede limitar la portabilidad.
-Se aceptan costuras UV coincidentes y bordes abiertos de la segmentación didáctica.
-
-## Créditos
-
-Caballo y vaca: Microsoft © 2020, licencia MIT. Copias obtenidas de
-[Horse Brown](https://models.codelove.in/models/horse-brown-01/) y
-[Cow Black](https://models.codelove.in/models/cow-black-01/).
-Three.js 0.186.1: autores de Three.js, MIT.
-Avisos completos en `docs/credits.html` y `docs/vendor/three/LICENSE`.
-Logo INMERVIA e imagen C1: proporcionados por Daniel; la licencia MIT de las bases
-animales no concede derechos sobre estos elementos de marca o imagen.
+Los créditos completos están en `LICENSES.md` y en la página pública de créditos.

@@ -28,6 +28,7 @@ export async function startImmersiveSession(xr, manager) {
   if (!xr) throw new Error('Este navegador no ofrece WebXR.');
   const session = await xr.requestSession('immersive-ar', {
     requiredFeatures: ['local-floor'],
+    optionalFeatures: ['anchors', 'plane-detection', 'mesh-detection'],
   });
   try {
     await manager.setSession(session);

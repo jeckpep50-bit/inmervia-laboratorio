@@ -1,1 +1,15 @@
-{"project":"inmervia-animal-mr","status":"prototype","engine":"three","units_m":1,"axes":{"blender_up":"Z","gltf_up":"Y","gltf_front":"+Z"},"budget":{"triangles_per_animal":50000,"texture_max_px":2048,"bones_max":64,"max_influences":4,"draw_calls_per_animal":16},"required_regions":["head","neck","shoulder","thorax","pelvis","fore_left","fore_right","hind_left","hind_right","tail"],"scale_source":"licensed base model; not a measured reconstruction of the photographed specimen","topology_notes":"Open boundaries between didactic external surface pieces are intentional. These are not solid anatomical organs or bones.","anatomical_status":"educator_review_pending","lods":"One mobile-sized LOD for this prototype; one animal visible at a time.","collision":"raycast against rendered surface; no clinical or physical force simulation"}
+{
+  "project": "inmervia-animal-mr",
+  "status": "prototype-v2",
+  "engine": "three",
+  "units_m": 1,
+  "axes": {"blender_up":"Z","gltf_up":"Y","gltf_front":"+Z"},
+  "budget": {"triangles_per_animal":80000,"texture_max_px":2048,"bones_max":64,"max_influences":4,"surface_draw_calls_per_animal":10,"separated_draw_calls_per_animal":20},
+  "required_regions": ["head","neck","shoulder","thorax","pelvis","fore_left","fore_right","hind_left","hind_right","tail"],
+  "scale_source": "Nominal dimensions supplied by the CC0 model, not measured from the photographed specimen. Horse 2.40m long/2.01m total height, cow 2.40m long/1.41m total height. User can resize.",
+  "topology_notes": "Neutral closure faces are hidden between mounted neighbors, displayed on detached pieces and on exposed interfaces of the body. Closures are not internal anatomy. Validate assembled skin, isolated pieces and partial assembly states. Detached caps are coalesced to one extra draw per piece at runtime.",
+  "anatomical_status": "educator_review_pending; AI-assisted source with illustrative 13-bone rig",
+  "lods": "One bounded LOD, one animal visible at a time; device FPS acceptance remains pending.",
+  "collision": "Rendered mesh raycast with broad-phase bounds; no force or tissue simulation",
+  "occlusion": "Real tracked room planes/meshes if exposed by the browser; no simulated room surfaces or guaranteed dynamic people occlusion"
+}

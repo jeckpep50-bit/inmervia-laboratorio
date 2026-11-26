@@ -65,6 +65,12 @@ try {
       id + ': separación',
       await page.evaluate(() => window.lab.current.pieces.every((p) => !p.userData.snapped)),
     );
+    ok(
+      id + ': máximo veinte grupos al separar todas las piezas',
+      await page.evaluate(
+        () => window.lab.current.pieces.reduce((sum, p) => sum + p.geometry.groups.length, 0) <= 20,
+      ),
+    );
     const hit = await page.evaluate(() => {
       const p = window.lab.current.pieces.find((p) => p.userData.region === 'head');
       const v = p.getWorldPosition(p.position.clone()).project(window.lab.camera);
@@ -137,12 +143,37 @@ try {
     await page.locator('#reference-dialog img').evaluate((img) => img.naturalWidth > 0),
   );
   await page.locator('#reference-dialog [data-close]').click();
-  const metrics = await page.evaluate(() => ({
-    drawCalls: window.lab.renderer.info.render.calls,
-    triangles: window.lab.renderer.info.render.triangles,
-    geometries: window.lab.renderer.info.memory.geometries,
-    textures: window.lab.renderer.info.memory.textures,
-  }));
+  const metrics = await page.evaluate(() => {
+    const textures = new Map();
+    window.lab.scene.traverse((object) => {
+      for (const material of Array.isArray(object.material)
+        ? object.material
+        : object.material
+          ? [object.material]
+          : [])
+        for (const value of Object.values(material))
+          if (value?.isTexture)
+            textures.set(value.uuid, {
+              name: value.name,
+              width: value.image?.width,
+              height: value.image?.height,
+            });
+      const bone = object.skeleton?.boneTexture;
+      if (bone)
+        textures.set(bone.uuid, {
+          name: 'bone matrices',
+          width: bone.image?.width,
+          height: bone.image?.height,
+        });
+    });
+    return {
+      drawCalls: window.lab.renderer.info.render.calls,
+      triangles: window.lab.renderer.info.render.triangles,
+      geometries: window.lab.renderer.info.memory.geometries,
+      textures: window.lab.renderer.info.memory.textures,
+      materialAndBoneTextures: [...textures.values()],
+    };
+  });
   await page.screenshot({ path: 'assets/review/current-desktop.png', fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
   ok(
@@ -164,10 +195,11 @@ try {
       .locator('#enter-mr')
       .evaluate((button) => button.getBoundingClientRect().bottom <= innerHeight),
   );
+  await page.close();
 
   const rapid = await context.newPage();
   let requests = 0;
-  await rapid.route('**/models/cow.glb', async (route) => {
+  await rapid.route('**/models/cow*.glb*', async (route) => {
     requests++;
     await new Promise((resolve) => setTimeout(resolve, 250));
     await route.continue();
@@ -192,9 +224,10 @@ try {
         window.lab.actor.children.filter((o) => o.visible).length === 1,
     ),
   );
+  await rapid.close();
 
   const stale = await context.newPage();
-  await stale.route('**/models/cow.glb', async (route) => {
+  await stale.route('**/models/cow*.glb*', async (route) => {
     await new Promise((resolve) => setTimeout(resolve, 200));
     await route.abort();
   });
@@ -212,9 +245,10 @@ try {
         document.querySelector('#load-state').hidden,
     ),
   );
+  await stale.close();
 
   const failed = await context.newPage();
-  await failed.route('**/models/cow.glb', (route) => route.abort());
+  await failed.route('**/models/cow*.glb*', (route) => route.abort());
   await failed.goto(url);
   await failed.waitForFunction(() => window.lab?.ready);
   await failed.evaluate(() => window.lab.loadAnimal('cow'));
@@ -228,24 +262,26 @@ try {
     ),
   );
   ok('El error ofrece reintentar', await failed.locator('#retry-load').isVisible());
-  await failed.unroute('**/models/cow.glb');
+  await failed.unroute('**/models/cow*.glb*');
   await failed.locator('#retry-load').click();
   await failed.waitForFunction(() => window.lab.ready && window.lab.animal === 'cow');
   ok('Reintentar recupera la carga', await failed.locator('#load-state').isHidden());
+  await failed.close();
 
   const initial = await context.newPage();
-  await initial.route('**/models/horse.glb', (route) => route.abort());
+  await initial.route('**/models/horse*.glb*', (route) => route.abort());
   await initial.goto(url);
   await initial.locator('#retry-load').waitFor({ state: 'visible' });
   await initial.locator('#joint').dispatchEvent('change');
   ok('Fallo inicial recuperable', await initial.evaluate(() => !window.lab.ready));
-  await initial.unroute('**/models/horse.glb');
+  await initial.unroute('**/models/horse*.glb*');
   await initial.locator('#retry-load').click();
   await initial.waitForFunction(() => window.lab.ready);
   ok(
     'Reintento inicial completa el modelo',
     await initial.evaluate(() => window.lab.animal === 'horse'),
   );
+  await initial.close();
   const questProbe = await context.newPage();
   await questProbe.addInitScript(() => {
     window.xrRequests = 0;

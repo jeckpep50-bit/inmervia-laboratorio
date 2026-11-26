@@ -1,0 +1,23 @@
+{
+  "version": "0.3.0",
+  "builtAt": "2026-11-26T15:40:12.014Z",
+  "models": {
+    "horse": {
+      "file": "models/horse-v2.glb",
+      "bytes": 2658192,
+      "sha256": "380c13a5173405e331e1e3575c9f61c8dfd8a011aa794e715bdba4c8bf68a92d",
+      "triangles": 60049,
+      "bones": 13,
+      "regions": 10
+    },
+    "cow": {
+      "file": "models/cow-v2.glb",
+      "bytes": 2514292,
+      "sha256": "4c5c02920862a482302f3fde25346915a356407eaf6c13f62937a7778e0b39fc",
+      "triangles": 48153,
+      "bones": 13,
+      "regions": 10
+    }
+  },
+  "headsetTested": false
+}

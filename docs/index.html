@@ -10,7 +10,7 @@
       content="Explora, articula y monta diez regiones externas de un caballo y una vaca en 3D y realidad mixta."
     />
     <link rel="icon" href="favicon.svg" />
-    <link rel="stylesheet" href="style.css?v=0.2.0" />
+    <link rel="stylesheet" href="style.css?v=0.3.0" />
     <script type="importmap">
       {
         "imports": {
@@ -50,6 +50,66 @@
           ><button data-mode="assemble">Montar piezas</button>
         </div>
         <div class="mode-note" id="mode-note">Selecciona una región para conocerla.</div>
+        <section class="lesson-card" aria-label="Ruta guiada de aprendizaje">
+          <div class="section-label">APRENDE CON RETOS · 4 ETAPAS</div>
+          <h2 id="lesson-title">Observa, reconstruye y explica</h2>
+          <p id="lesson-instruction">
+            Reconoce siete regiones, reconstruye tres piezas y responde cinco preguntas.
+          </p>
+          <progress
+            id="lesson-progress"
+            max="100"
+            value="0"
+            aria-label="Progreso del recorrido"
+          ></progress>
+          <p id="lesson-feedback" role="status" aria-live="polite"></p>
+          <div
+            id="lesson-choices"
+            class="lesson-choices"
+            role="group"
+            aria-label="Respuestas"
+          ></div>
+          <div class="lesson-actions">
+            <button id="lesson-start" disabled>Comenzar</button
+            ><button id="lesson-next" hidden>Siguiente pregunta</button
+            ><button id="lesson-help" hidden>Ver con ayuda</button>
+          </div>
+          <details>
+            <summary id="lesson-score">Mi práctica · 0/100 puntos</summary>
+            <p id="lesson-result">
+              El progreso se guarda en este navegador, por animal, sin nombres ni envío a un
+              servidor.
+            </p>
+            <div class="button-row">
+              <button id="lesson-export">Descargar resultado</button
+              ><button id="lesson-reset">Reiniciar ruta</button>
+            </div>
+          </details>
+        </section>
+        <div class="accessibility-controls">
+          <button id="read-region">Escuchar explicación</button
+          ><button id="toggle-sound" aria-pressed="true">Sonido activado</button>
+        </div>
+        <details class="space-options">
+          <summary>Opciones del aula en MR</summary>
+          <p id="spatial-state">Entra en MR para detectar tu espacio.</p>
+          <div class="button-row">
+            <button id="place-room" disabled>Colocar en superficie</button
+            ><button id="anchor-room" disabled>Fijar posición</button>
+          </div>
+          <div class="button-row">
+            <button id="clear-anchor-room" disabled>Soltar ancla</button
+            ><button id="capture-room" disabled>Configurar habitación</button>
+          </div>
+          <label
+            ><input id="occlusion-toggle" type="checkbox" checked /> Oclusión de superficies del
+            aula</label
+          >
+          <p class="feature-note">
+            Requiere datos del espacio y permiso del visor. Los planos del aula no representan
+            personas en movimiento.
+          </p>
+        </details>
         <div class="section-label regions-head">
           REGIONES EXTERNAS <span id="visited">0 / 10</span>
         </div>
@@ -98,6 +158,7 @@
           </div>
           <small>Movimiento ilustrativo; no indica un rango anatómico normal.</small
           ><button id="reset-pose" class="text-button">Restablecer postura</button>
+          <button id="focus-region" class="text-button">Acercar a la región</button>
         </section>
         <section class="assembly-card" id="assembly-card" hidden>
           <strong id="assembly-count">10 / 10 piezas en su sitio</strong>
@@ -113,6 +174,11 @@
             >Segmentación didáctica de la superficie externa. No representa una disección ni órganos
             internos.</small
           >
+          <p id="snap-status" role="status">Selecciona una pieza para ver dónde encaja.</p>
+          <div class="button-row">
+            <button id="rotate-axis">Eje de giro: Y</button
+            ><button id="toggle-guides" aria-pressed="true">Guía de encaje</button>
+          </div>
         </section>
         <div class="bottom-toolbar">
           <button id="reset-view" class="subtle">Centrar vista</button
@@ -172,11 +238,11 @@
         <li>Si la entrada falla, copia el diagnóstico para identificar el motivo.</li>
       </ol>
       <details>
-        <summary>Ver diagnóstico técnico · versión 0.2.0</summary>
+        <summary>Ver diagnóstico técnico · versión 0.3.0</summary>
         <pre id="xr-diagnostics-output"></pre>
       </details>
       <button id="copy-xr-diagnostics">Copiar diagnóstico</button>
     </dialog>
-    <script type="module" src="app.js?v=0.2.0"></script>
+    <script type="module" src="app.js?v=0.3.0"></script>
   </body>
 </html>

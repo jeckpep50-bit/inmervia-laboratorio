@@ -669,3 +669,143 @@ dialog ol {
     height: auto;
   }
 }
+.lesson-card {
+  padding: 14px;
+  background: #f8f2f8;
+  border: 1px solid #e5d7e3;
+  border-radius: 10px;
+  margin: 0 0 18px;
+}
+.lesson-card h2 {
+  font-size: 15px;
+  line-height: 1.35;
+  margin: 0 0 8px;
+  color: var(--plum);
+}
+.lesson-card p {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 7px 0;
+}
+.lesson-card progress {
+  width: 100%;
+  height: 8px;
+  accent-color: #176d72;
+}
+.lesson-card #lesson-feedback {
+  background: #fff;
+  padding: 8px;
+  border-radius: 6px;
+  color: #23666a;
+}
+.lesson-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 9px 0;
+}
+.lesson-actions button {
+  font-size: 11px;
+  padding: 8px 10px;
+}
+.lesson-choices {
+  display: grid;
+  gap: 6px;
+}
+.lesson-choices button {
+  font-size: 11px;
+  text-align: left;
+  line-height: 1.4;
+  padding: 8px;
+}
+.lesson-card details {
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 12px;
+}
+.lesson-card summary,
+.space-options summary {
+  cursor: pointer;
+  color: var(--plum);
+  font-weight: 650;
+}
+.accessibility-controls {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.accessibility-controls button {
+  font-size: 11px;
+  padding: 8px;
+}
+.space-options {
+  font-size: 11px;
+  line-height: 1.5;
+  padding: 10px 0 16px;
+}
+.space-options .feature-note {
+  font-size: 10px;
+  color: var(--muted);
+}
+.space-options label {
+  display: flex;
+  gap: 7px;
+  align-items: flex-start;
+}
+.space-options .button-row {
+  margin-top: 8px;
+}
+.pose-card .text-button {
+  display: inline-block;
+  margin-right: 12px;
+}
+#snap-status {
+  color: #176d72;
+  font-weight: 650;
+  font-size: 11px;
+}
+@media (max-width: 620px) {
+  .workspace {
+    height: auto;
+    padding-top: 430px;
+    padding-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+  }
+  .workspace #viewer {
+    inset: 0 0 auto;
+    height: 430px;
+  }
+  .workspace .viewer-hint {
+    position: static;
+    order: 0;
+    padding: 9px 16px;
+  }
+  .workspace .pose-card,
+  .workspace .assembly-card {
+    position: static;
+    order: 1;
+    width: auto;
+    margin: 8px 12px;
+    padding: 13px;
+  }
+  .workspace .bottom-toolbar {
+    position: static;
+    order: 2;
+    flex-wrap: wrap;
+    margin: 10px 12px;
+  }
+  .workspace .xr-status {
+    position: static;
+    order: 3;
+    margin: 0 16px;
+    line-height: 1.5;
+  }
+  .load-state.failed {
+    inset: 130px 12px auto;
+  }
+  .lesson-card {
+    margin-top: 0;
+  }
+}

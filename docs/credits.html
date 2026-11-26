@@ -1,4 +1,110 @@
-<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Créditos y alcance · INMERVIA</title><style>body{font:16px/1.65 system-ui;color:#342b36;max-width:800px;margin:50px auto;padding:0 25px;background:#faf8f5}h1,h2,a{color:#511d4c}h1{font-size:32px}.note{background:#fff0d8;border-left:5px solid #f5a13a;padding:20px}pre{font:12px/1.5 ui-monospace,monospace;white-space:pre-wrap;background:white;padding:20px;border:1px solid #ddd}</style><body><a href="./">← Volver al laboratorio</a><h1>Créditos y alcance del prototipo</h1><p class="note"><strong>Demostración de anatomía externa para secundaria.</strong> Las piezas son segmentos de la superficie del animal, con límites aproximados. No son huesos, músculos u órganos. Los movimientos ilustrativos no definen rangos anatómicos normales. La precisión de las regiones y del contenido está pendiente de revisión docente.</p><h2>Recursos utilizados</h2><ul><li>Caballo y vaca: copyright © 2020 Microsoft. Licencia MIT incluida en los archivos originales. Copias obtenidas de <a href="https://models.codelove.in/models/horse-brown-01/">Horse Brown</a> y <a href="https://models.codelove.in/models/cow-black-01/">Cow Black</a>. Adaptación: separación didáctica en diez superficies, orientación, centrado y exportación. El esqueleto es un rig de animación, no un modelo óseo.</li><li>Renderizador: Three.js 0.186.1, licencia MIT. <a href="vendor/three/LICENSE">Licencia de Three.js</a>.</li><li>Referencia visual C1: imagen proporcionada por Daniel. No se afirma que el modelo reconstruya exactamente al ejemplar fotografiado.</li><li>Identidad gráfica: INMERVIA, proporcionada en este proyecto.</li></ul><h2>Referencias para revisión docente</h2><p><a href="https://vetmed.illinois.edu/imaging_anatomy/index.html">Imaging Anatomy, College of Veterinary Medicine, University of Illinois</a>. Recurso de consulta; el prototipo no reproduce su material ni implica su aprobación.</p><h2>Validación técnica</h2><p>Los modelos se comprueban como archivos glTF y la interacción se verifica en navegador de escritorio. La compatibilidad efectiva, el rendimiento y la colocación espacial deben comprobarse físicamente en Meta Quest 2 y 3 antes de una clase. Este prototipo no incluye sincronización entre estudiantes, registro de datos personales, diagnóstico ni simulación de fuerzas.</p><h2>Licencia de las bases animales</h2><pre>MIT License
+<!doctype html>
+<html lang="es">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>Créditos y alcance · INMERVIA</title
+  ><style>
+    body {
+      font: 16px/1.65 system-ui;
+      color: #342b36;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 0 25px;
+      background: #faf8f5;
+    }
+    h1,
+    h2,
+    a {
+      color: #511d4c;
+    }
+    h1 {
+      font-size: 32px;
+    }
+    .note {
+      background: #fff0d8;
+      border-left: 5px solid #f5a13a;
+      padding: 20px;
+    }
+    pre {
+      font:
+        12px/1.5 ui-monospace,
+        monospace;
+      white-space: pre-wrap;
+      background: white;
+      padding: 20px;
+      border: 1px solid #ddd;
+    }
+  </style>
+  <body>
+    <a href="./">← Volver al laboratorio</a>
+    <h1>Créditos y alcance del prototipo</h1>
+    <p class="note">
+      <strong>Demostración de anatomía externa para secundaria.</strong> Las piezas son segmentos de
+      la superficie del animal, con límites aproximados. No son huesos, músculos u órganos. Los
+      movimientos ilustrativos no definen rangos anatómicos normales. La precisión de las regiones y
+      del contenido está pendiente de revisión docente.
+    </p>
+    <h2>Recursos utilizados</h2>
+    <ul>
+      <li>
+        Modelos actuales de caballo y vaca:
+        <a href="https://grab3d.com/models/animals/horse/">Horse de Grab3D</a> y
+        <a href="https://grab3d.com/models/animals/cow/">Cow de Grab3D</a>, CC0. Según su proveedor,
+        las bases son de origen asistido por IA; no son escaneos anatómicos validados. Adaptación en
+        Blender: reducción de geometría, texturas PBR de hasta 2048 px, diez regiones, cierres
+        didácticos y rig ilustrativo de trece huesos.
+        <a href="licenses/horse-grab3d-CC0.txt">Licencia del caballo</a> ·
+        <a href="licenses/cow-grab3d-CC0.txt">Licencia de la vaca</a>.
+      </li>
+      <li>
+        Bases de la versión anterior conservadas para compatibilidad con páginas en caché: copyright
+        © 2020 Microsoft. Licencia MIT incluida en los archivos originales. Copias obtenidas de
+        <a href="https://models.codelove.in/models/horse-brown-01/">Horse Brown</a> y
+        <a href="https://models.codelove.in/models/cow-black-01/">Cow Black</a>. Adaptación:
+        separación didáctica en diez superficies, orientación, centrado y exportación. El esqueleto
+        es un rig de animación, no un modelo óseo.
+      </li>
+      <li>
+        Renderizador: Three.js 0.186.1, licencia MIT.
+        <a href="vendor/three/LICENSE">Licencia de Three.js</a>.
+      </li>
+      <li>
+        Decodificador de geometría Meshopt: Arseny Kapoulkine, MIT.
+        <a href="licenses/meshoptimizer-MIT.txt">Licencia de meshoptimizer</a>.
+      </li>
+      <li>
+        Referencia visual C1: imagen proporcionada por Daniel. No se afirma que el modelo
+        reconstruya exactamente al ejemplar fotografiado.
+      </li>
+      <li>Identidad gráfica: INMERVIA, proporcionada en este proyecto.</li>
+    </ul>
+    <h2>Referencias para revisión docente</h2>
+    <p>
+      <a href="https://vetmed.illinois.edu/imaging_anatomy/index.html"
+        >Imaging Anatomy, College of Veterinary Medicine, University of Illinois</a
+      >. Recurso de consulta; el prototipo no reproduce su material ni implica su aprobación.
+      También se utiliza como referencia de revisión
+      <a
+        href="https://extension.umn.edu/agriculture/animals-and-livestock/horse/conformation-of-the-horse"
+        >Conformation of the horse, University of Minnesota Extension</a
+      >.
+    </p>
+    <h2>Validación técnica</h2>
+    <p>
+      Los modelos se comprueban como archivos glTF y la interacción se verifica en navegador de
+      escritorio. La compatibilidad efectiva, el rendimiento y la colocación espacial deben
+      comprobarse físicamente en Meta Quest 2 y 3 antes de una clase. La ruta guiada incluye
+      reconocimiento, orientación, montaje y cinco preguntas con retroalimentación. Guarda el
+      progreso localmente en este navegador y permite descargar resultados sin nombres. No envía las
+      respuestas a un servidor. La voz depende de la disponibilidad del navegador. El anclaje dura
+      la sesión; la oclusión depende de planos o mallas reales suministrados por el visor y de la
+      configuración de la habitación. No garantiza ocultación por personas en movimiento. Este
+      prototipo no incluye sincronización entre estudiantes, diagnóstico ni simulación de fuerzas.
+    </p>
+    <h2>Licencia de las bases anteriores de Microsoft</h2>
+    <pre>
+MIT License
 
 Copyright (c) 2020 Microsoft
 
@@ -18,4 +124,6 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.</pre></body></html>
+SOFTWARE.</pre>
+  </body>
+</html>

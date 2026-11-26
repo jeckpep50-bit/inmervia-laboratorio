@@ -1,15 +1,17 @@
 {
   "name": "inmervia-laboratorio",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
   "scripts": {
     "start": "node server.mjs",
-    "check": "node --check docs/app.js && node --check docs/zones.js && node --check docs/runtime.js && node --check server.mjs",
+    "check": "node tools/check.mjs",
     "test": "node --test tests/*.test.mjs",
     "test:browser": "node tests/browser.mjs",
-    "format": "prettier --write docs/app.js docs/runtime.js docs/zones.js docs/index.html docs/style.css server.mjs tests package.json",
-    "format:check": "prettier --check docs/app.js docs/runtime.js docs/zones.js docs/index.html docs/style.css server.mjs tests package.json"
+    "format": "prettier --write docs/*.js docs/index.html docs/credits.html docs/style.css server.mjs tests tools/*.mjs package.json",
+    "format:check": "prettier --check docs/*.js docs/index.html docs/credits.html docs/style.css server.mjs tests tools/*.mjs package.json",
+    "test:experience": "node tests/experience.mjs",
+    "test:pages": "node tests/pages.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.1",

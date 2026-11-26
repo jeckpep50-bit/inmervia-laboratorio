@@ -1,0 +1,17 @@
+{
+  "ids": ["horse-v2", "cow-v2"],
+  "category": "educational-animal",
+  "track": "character",
+  "status": "done",
+  "runtime_acceptance": "Physical Quest 2/3 test and educator review pending; asset visual review approved 8/10.",
+  "what": "Externally textured horse and cow for secondary school: select ten regions, move illustrative joints, detach, rotate and replace surface pieces in Three.js/WebXR.",
+  "dims_source": "Nominal dimensions from licensed Grab3D CC0 source meshes; not a measured anatomical specimen.",
+  "dims_m": {"horse": [0.582516,2.399652,2.011135], "cow": [0.799857,2.400176,1.414175]},
+  "pivot": "Ground-level centered root; detachable pieces centered on their geometry with saved assembly transform.",
+  "collider": "Visible surface raycast; no rigid-body collision or clinical forces.",
+  "states": ["assembled surface with closures hidden", "detached segment with neutral closure visible", "illustrative pose"],
+  "views": {"primary": "Eye-height within roughly 1–3m in Quest, desktop orbit, front/side/rear/three-quarter and separated/wireframe review in the actual Three.js application."},
+  "style_notes": "Natural PBR coat, restrained cyan selection outline, soft grounding shadow. No decorative hologram effect over the whole animal. Do not imply internal muscles, bones or surgical accuracy.",
+  "source": "https://grab3d.com/models/animals/",
+  "review_required": ["Khronos glTF validation", "Blender state-dependent geometry QA", "fresh-eyes engine image review", "physical Quest 2/3 interaction and FPS", "teacher anatomy review"]
+}

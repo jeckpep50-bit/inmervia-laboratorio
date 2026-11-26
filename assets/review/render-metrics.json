@@ -1,9 +1,146 @@
 {
   "scope": "Desktop Chromium, screenshot frame; not Quest FPS or a performance benchmark",
   "metrics": {
-    "drawCalls": 12,
-    "triangles": 3274,
-    "geometries": 42,
-    "textures": 9
+    "drawCalls": 23,
+    "triangles": 120754,
+    "geometries": 46,
+    "textures": 52,
+    "materialAndBoneTextures": [
+      {
+        "name": "Image_0",
+        "width": 2048,
+        "height": 2048
+      },
+      {
+        "name": "Image_2",
+        "width": 2048,
+        "height": 2048
+      },
+      {
+        "name": "Image_1",
+        "width": 2048,
+        "height": 2048
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "Image_0",
+        "width": 2048,
+        "height": 2048
+      },
+      {
+        "name": "Image_2",
+        "width": 2048,
+        "height": 2048
+      },
+      {
+        "name": "Image_1",
+        "width": 2048,
+        "height": 2048
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "bone matrices",
+        "width": 8,
+        "height": 8
+      },
+      {
+        "name": "",
+        "width": 1024,
+        "height": 1190
+      }
+    ]
   }
 }

@@ -51,7 +51,13 @@ test('MR requests the floor reference space actually used by the renderer', asyn
   };
   const manager = { setSession: async (value) => assert.equal(value, session) };
   assert.equal(await startImmersiveSession(xr, manager), session);
-  assert.deepEqual(request, ['immersive-ar', { requiredFeatures: ['local-floor'] }]);
+  assert.deepEqual(request, [
+    'immersive-ar',
+    {
+      requiredFeatures: ['local-floor'],
+      optionalFeatures: ['anchors', 'plane-detection', 'mesh-detection'],
+    },
+  ]);
 });
 
 test('failed MR renderer setup closes the acquired session', async () => {

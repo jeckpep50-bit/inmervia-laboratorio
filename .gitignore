@@ -6,3 +6,5 @@ node_modules/
 *.zip
 *.blend1
 assets/review/*.png
+assets/cache/
+assets/review/pages-checks.json

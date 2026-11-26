@@ -1,0 +1,118 @@
+[
+  {
+    "animal": "horse",
+    "stage": "distributed",
+    "bytes": 2658192,
+    "errors": 0,
+    "warnings": 10,
+    "info": 61,
+    "triangles": 60049,
+    "images": [
+      {
+        "width": 2048,
+        "height": 2048,
+        "format": "rgb",
+        "bits": 8
+      },
+      {
+        "width": 2048,
+        "height": 2048,
+        "format": "rgb",
+        "bits": 8
+      },
+      {
+        "width": 2048,
+        "height": 2048,
+        "format": "rgb",
+        "bits": 8
+      }
+    ]
+  },
+  {
+    "animal": "horse",
+    "stage": "uncompressed",
+    "bytes": 6826192,
+    "errors": 0,
+    "warnings": 10,
+    "info": 60,
+    "triangles": 60049,
+    "images": [
+      {
+        "width": 2048,
+        "height": 2048,
+        "format": "rgb",
+        "bits": 8
+      },
+      {
+        "width": 2048,
+        "height": 2048,
+        "format": "rgb",
+        "bits": 8
+      },
+      {
+        "width": 2048,
+        "height": 2048,
+        "format": "rgb",
+        "bits": 8
+      }
+    ]
+  },
+  {
+    "animal": "cow",
+    "stage": "distributed",
+    "bytes": 2514292,
+    "errors": 0,
+    "warnings": 10,
+    "info": 45,
+    "triangles": 48153,
+    "images": [
+      {
+        "width": 2048,
+        "height": 2048,
+        "format": "rgb",
+        "bits": 8
+      },
+      {
+        "width": 2048,
+        "height": 2048,
+        "format": "rgb",
+        "bits": 8
+      },
+      {
+        "width": 2048,
+        "height": 2048,
+        "format": "rgb",
+        "bits": 8
+      }
+    ]
+  },
+  {
+    "animal": "cow",
+    "stage": "uncompressed",
+    "bytes": 5291436,
+    "errors": 0,
+    "warnings": 10,
+    "info": 44,
+    "triangles": 48153,
+    "images": [
+      {
+        "width": 2048,
+        "height": 2048,
+        "format": "rgb",
+        "bits": 8
+      },
+      {
+        "width": 2048,
+        "height": 2048,
+        "format": "rgb",
+        "bits": 8
+      },
+      {
+        "width": 2048,
+        "height": 2048,
+        "format": "rgb",
+        "bits": 8
+      }
+    ]
+  }
+]
